@@ -2,8 +2,10 @@
 
 ## Author
 
-<!-- Insert Your Name Here -->
+Luca Negris
 
 ## Description
 
-<!-- Describe your example here -->
+Multi Effects unit for guitar or synth. Runs on Daisy Seed platform. Currently only supports mono, but stereo will be added soon.
+
+Building this project requires libDaisy and DaisySP which can be found here: https://github.com/electro-smith
