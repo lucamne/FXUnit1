@@ -105,7 +105,6 @@ int main(void)
 			{
 				current_effect = effect_array[0];
 			}
-			hw.PrintLine("%d",mode);
 		}
 		previous_a_state = curr_a_state;
 
