@@ -6,7 +6,7 @@ class Bypass : public Effect
 {
 public:
     Bypass()
-    :Effect("Bypass",1) {};
+    :Effect("Bypass",0) {};
     ~Bypass() {};
 
     float Process(float val) {return val;}

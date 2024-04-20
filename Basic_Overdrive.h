@@ -16,7 +16,7 @@
 class Basic_Overdrive : public Effect
 {
   public:
-    Basic_Overdrive():Effect("Overdrive",2) {}
+    Basic_Overdrive():Effect("Overdrive",2),m_mix{1.0f} {}
     ~Basic_Overdrive() {}
 
     /** Initializes the module with 0 gain */
@@ -40,4 +40,6 @@ class Basic_Overdrive : public Effect
     float drive_;
     float pre_gain_;
     float post_gain_;
+
+    float m_mix{};
 };

@@ -6,7 +6,7 @@ class Effect
 {
 public:
     Effect(std::string effect_name, int param_count)
-    :m_effect_name{effect_name}, m_sample_rate{48000.0f}, m_param_count{param_count}, m_current_param{0}, m_current_param_name{"Mix"}, m_mix{1.0f} {}
+    :m_effect_name{effect_name}, m_sample_rate{48000.0f}, m_param_count{param_count}, m_current_param{0}, m_current_param_name{"None"} {}
     ~Effect() {}
 
     virtual void Init(float sample_rate) {m_sample_rate = sample_rate;}
@@ -26,5 +26,4 @@ protected:
     int m_param_count{};
     int m_current_param{};
     std::string m_current_param_name{};
-    float m_mix{}; //< m_mix should be between 0.0f and 1.0f
 };

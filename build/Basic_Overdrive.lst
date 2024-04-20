@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccchnHVr.s 			page 1
+ARM GAS  /tmp/cc4HmTtm.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
   20:Basic_Overdrive.cpp ****     drive_ = 2.f * drive;
   21:Basic_Overdrive.cpp **** 
   22:Basic_Overdrive.cpp ****     const float drive_2    = drive_ * drive_;
-ARM GAS  /tmp/ccchnHVr.s 			page 2
+ARM GAS  /tmp/cc4HmTtm.s 			page 2
 
 
   23:Basic_Overdrive.cpp ****     const float pre_gain_a = drive_ * 0.5f;
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
   35:Basic_Overdrive.cpp ****     {
   65              		.loc 1 35 5 is_stmt 1 discriminator 1 view .LVU13
   66              	.L3:
-ARM GAS  /tmp/ccchnHVr.s 			page 3
+ARM GAS  /tmp/cc4HmTtm.s 			page 3
 
 
   37:Basic_Overdrive.cpp ****             m_current_param_name = "Mix";
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  112              		.file 2 "/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h"
    1:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** /*
    2:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** Copyright (c) 2020 Electrosmith, Corp, Emilie Gillet
-ARM GAS  /tmp/ccchnHVr.s 			page 4
+ARM GAS  /tmp/cc4HmTtm.s 			page 4
 
 
    3:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** 
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
   57:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     r = (a < b) ? a : b;
   58:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #endif // __arm__
   59:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     return r;
-ARM GAS  /tmp/ccchnHVr.s 			page 5
+ARM GAS  /tmp/cc4HmTtm.s 			page 5
 
 
   60:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  114:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** About 25% performance increase over std::log10f
  115:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** */
  116:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** inline float fastlog2f(float f)
-ARM GAS  /tmp/ccchnHVr.s 			page 6
+ARM GAS  /tmp/cc4HmTtm.s 			page 6
 
 
  117:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** {
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  171:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****  *
  172:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****  *  When using the log curve min and max, must be greater than zero.
  173:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****  *
-ARM GAS  /tmp/ccchnHVr.s 			page 7
+ARM GAS  /tmp/cc4HmTtm.s 			page 7
 
 
  174:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****  *  \retval returns the transformed float within the new range.
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  228:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** /** Ported from pichenettes/eurorack/plaits/dsp/oscillator/oscillator.h
  229:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** */
  230:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** inline float ThisIntegratedBlepSample(float t)
-ARM GAS  /tmp/ccchnHVr.s 			page 8
+ARM GAS  /tmp/cc4HmTtm.s 			page 8
 
 
  231:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** {
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  143 0020 F2EE026A 		vmov.f32	s13, #9.0e+0
  238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
  144              		.loc 2 238 22 view .LVU34
-ARM GAS  /tmp/ccchnHVr.s 			page 9
+ARM GAS  /tmp/cc4HmTtm.s 			page 9
 
 
  145 0024 B0EE677A 		vmov.f32	s14, s15
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  189              		.global	_ZN15Basic_Overdrive7ProcessEf
  190              		.syntax unified
  191              		.thumb
-ARM GAS  /tmp/ccchnHVr.s 			page 10
+ARM GAS  /tmp/cc4HmTtm.s 			page 10
 
 
  192              		.thumb_func
@@ -571,7 +571,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  215              		.loc 1 14 5 is_stmt 1 view .LVU52
   13:Basic_Overdrive.cpp ****     return (daisysp::SoftClip(pre) * post_gain_)*m_mix + in*(1-m_mix);
  216              		.loc 1 13 11 is_stmt 0 view .LVU53
- 217 000a 90ED120A 		vldr.32	s0, [r0, #72]
+ 217 000a 90ED110A 		vldr.32	s0, [r0, #68]
  218              	.LVL13:
   12:Basic_Overdrive.cpp ****     float pre = pre_gain_ * in;
  219              		.loc 1 12 1 view .LVU54
@@ -589,16 +589,16 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  228 0018 F7EE007A 		vmov.f32	s15, #1.0e+0
   14:Basic_Overdrive.cpp **** }
  229              		.loc 1 14 50 view .LVU58
- 230 001c D4ED106A 		vldr.32	s13, [r4, #64]
+ 230 001c D4ED136A 		vldr.32	s13, [r4, #76]
   14:Basic_Overdrive.cpp **** }
  231              		.loc 1 14 36 view .LVU59
- 232 0020 94ED137A 		vldr.32	s14, [r4, #76]
+ 232 0020 94ED127A 		vldr.32	s14, [r4, #72]
   14:Basic_Overdrive.cpp **** }
  233              		.loc 1 14 63 view .LVU60
  234 0024 77EEE67A 		vsub.f32	s15, s15, s13
   14:Basic_Overdrive.cpp **** }
  235              		.loc 1 14 36 view .LVU61
-ARM GAS  /tmp/ccchnHVr.s 			page 11
+ARM GAS  /tmp/cc4HmTtm.s 			page 11
 
 
  236 0028 20EE077A 		vmul.f32	s14, s0, s14
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  281              	.LBE27:
  282              	.LBE39:
   18:Basic_Overdrive.cpp ****     drive  = daisysp::fclamp(drive, 0.f, 1.f);
-ARM GAS  /tmp/ccchnHVr.s 			page 12
+ARM GAS  /tmp/cc4HmTtm.s 			page 12
 
 
  283              		.loc 1 18 1 is_stmt 0 view .LVU73
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  328              	.LBB37:
  329              	.LBB35:
   55:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #else
-ARM GAS  /tmp/ccchnHVr.s 			page 13
+ARM GAS  /tmp/cc4HmTtm.s 			page 13
 
 
  330              		.loc 2 55 5 view .LVU83
@@ -763,7 +763,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  361 0024 67EEA76A 		vmul.f32	s13, s15, s15
   20:Basic_Overdrive.cpp **** 
  362              		.loc 1 20 12 view .LVU92
- 363 0028 C0ED117A 		vstr.32	s15, [r0, #68]
+ 363 0028 C0ED107A 		vstr.32	s15, [r0, #64]
   22:Basic_Overdrive.cpp ****     const float pre_gain_a = drive_ * 0.5f;
  364              		.loc 1 22 5 is_stmt 1 view .LVU93
  365              	.LVL22:
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  370 002c 26EEA67A 		vmul.f32	s14, s13, s13
   24:Basic_Overdrive.cpp ****     pre_gain_              = pre_gain_a + (pre_gain_b - pre_gain_a) * drive_2;
  371              		.loc 1 24 48 view .LVU98
-ARM GAS  /tmp/ccchnHVr.s 			page 14
+ARM GAS  /tmp/cc4HmTtm.s 			page 14
 
 
  372 0030 27EE277A 		vmul.f32	s14, s14, s15
@@ -810,7 +810,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  391              	.LVL26:
   25:Basic_Overdrive.cpp **** 
  392              		.loc 1 25 28 view .LVU106
- 393 0054 80ED127A 		vstr.32	s14, [r0, #72]
+ 393 0054 80ED117A 		vstr.32	s14, [r0, #68]
   27:Basic_Overdrive.cpp ****     post_gain_ = 1.0f / daisysp::SoftClip(0.33f + drive_squashed * (pre_gain_ - 0.33f));
  394              		.loc 1 27 5 is_stmt 1 view .LVU107
   28:Basic_Overdrive.cpp **** }
@@ -834,11 +834,11 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  408              		.cfi_def_cfa_offset 8
   28:Basic_Overdrive.cpp **** }
  409              		.loc 1 28 16 view .LVU113
- 410 006c C4ED137A 		vstr.32	s15, [r4, #76]
+ 410 006c C4ED127A 		vstr.32	s15, [r4, #72]
   29:Basic_Overdrive.cpp **** 
  411              		.loc 1 29 1 view .LVU114
  412 0070 10BD     		pop	{r4, pc}
-ARM GAS  /tmp/ccchnHVr.s 			page 15
+ARM GAS  /tmp/cc4HmTtm.s 			page 15
 
 
  413              	.LVL28:
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  463              	.LFB3531:
   45:Basic_Overdrive.cpp ****     }
   46:Basic_Overdrive.cpp **** }
-ARM GAS  /tmp/ccchnHVr.s 			page 16
+ARM GAS  /tmp/cc4HmTtm.s 			page 16
 
 
   47:Basic_Overdrive.cpp **** 
@@ -958,13 +958,13 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
   52:Basic_Overdrive.cpp ****         case 0:
  500              		.loc 1 52 9 is_stmt 1 view .LVU130
   53:Basic_Overdrive.cpp ****             m_mix = val;
-ARM GAS  /tmp/ccchnHVr.s 			page 17
+ARM GAS  /tmp/cc4HmTtm.s 			page 17
 
 
  501              		.loc 1 53 13 view .LVU131
   53:Basic_Overdrive.cpp ****             m_mix = val;
  502              		.loc 1 53 19 is_stmt 0 view .LVU132
- 503 0020 80ED100A 		vstr.32	s0, [r0, #64]
+ 503 0020 80ED130A 		vstr.32	s0, [r0, #76]
   54:Basic_Overdrive.cpp ****             return val;
  504              		.loc 1 54 13 is_stmt 1 view .LVU133
   54:Basic_Overdrive.cpp ****             return val;
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  550              		.file 20 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
  551              		.file 21 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
  552              		.file 22 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
-ARM GAS  /tmp/ccchnHVr.s 			page 18
+ARM GAS  /tmp/cc4HmTtm.s 			page 18
 
 
  553              		.file 23 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
@@ -1047,27 +1047,27 @@ ARM GAS  /tmp/ccchnHVr.s 			page 1
  576              		.file 46 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/s
  577              		.file 47 "Basic_Overdrive.h"
  578              		.file 48 "Effect.h"
-ARM GAS  /tmp/ccchnHVr.s 			page 19
+ARM GAS  /tmp/cc4HmTtm.s 			page 19
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 Basic_Overdrive.cpp
-     /tmp/ccchnHVr.s:24     .text._ZN15Basic_Overdrive10CycleParamEv:0000000000000000 $t
-     /tmp/ccchnHVr.s:32     .text._ZN15Basic_Overdrive10CycleParamEv:0000000000000000 _ZN15Basic_Overdrive10CycleParamEv
-     /tmp/ccchnHVr.s:95     .text._ZN15Basic_Overdrive10CycleParamEv:0000000000000034 $d
-     /tmp/ccchnHVr.s:102    .text._ZN7daisysp8SoftClipEf:0000000000000000 $t
-     /tmp/ccchnHVr.s:109    .text._ZN7daisysp8SoftClipEf:0000000000000000 _ZN7daisysp8SoftClipEf
-     /tmp/ccchnHVr.s:188    .text._ZN15Basic_Overdrive7ProcessEf:0000000000000000 $t
-     /tmp/ccchnHVr.s:195    .text._ZN15Basic_Overdrive7ProcessEf:0000000000000000 _ZN15Basic_Overdrive7ProcessEf
-     /tmp/ccchnHVr.s:253    .text._ZN15Basic_Overdrive8SetDriveEf:0000000000000000 $t
-     /tmp/ccchnHVr.s:260    .text._ZN15Basic_Overdrive8SetDriveEf:0000000000000000 _ZN15Basic_Overdrive8SetDriveEf
-     /tmp/ccchnHVr.s:418    .text._ZN15Basic_Overdrive8SetDriveEf:0000000000000074 $d
-     /tmp/ccchnHVr.s:424    .text._ZN15Basic_Overdrive4InitEf:0000000000000000 $t
-     /tmp/ccchnHVr.s:431    .text._ZN15Basic_Overdrive4InitEf:0000000000000000 _ZN15Basic_Overdrive4InitEf
-     /tmp/ccchnHVr.s:454    .text._ZN15Basic_Overdrive8SetParamEf:0000000000000000 $t
-     /tmp/ccchnHVr.s:461    .text._ZN15Basic_Overdrive8SetParamEf:0000000000000000 _ZN15Basic_Overdrive8SetParamEf
-     /tmp/ccchnHVr.s:524    .rodata._ZTV15Basic_Overdrive:0000000000000000 _ZTV15Basic_Overdrive
-     /tmp/ccchnHVr.s:521    .rodata._ZTV15Basic_Overdrive:0000000000000000 $d
+     /tmp/cc4HmTtm.s:24     .text._ZN15Basic_Overdrive10CycleParamEv:0000000000000000 $t
+     /tmp/cc4HmTtm.s:32     .text._ZN15Basic_Overdrive10CycleParamEv:0000000000000000 _ZN15Basic_Overdrive10CycleParamEv
+     /tmp/cc4HmTtm.s:95     .text._ZN15Basic_Overdrive10CycleParamEv:0000000000000034 $d
+     /tmp/cc4HmTtm.s:102    .text._ZN7daisysp8SoftClipEf:0000000000000000 $t
+     /tmp/cc4HmTtm.s:109    .text._ZN7daisysp8SoftClipEf:0000000000000000 _ZN7daisysp8SoftClipEf
+     /tmp/cc4HmTtm.s:188    .text._ZN15Basic_Overdrive7ProcessEf:0000000000000000 $t
+     /tmp/cc4HmTtm.s:195    .text._ZN15Basic_Overdrive7ProcessEf:0000000000000000 _ZN15Basic_Overdrive7ProcessEf
+     /tmp/cc4HmTtm.s:253    .text._ZN15Basic_Overdrive8SetDriveEf:0000000000000000 $t
+     /tmp/cc4HmTtm.s:260    .text._ZN15Basic_Overdrive8SetDriveEf:0000000000000000 _ZN15Basic_Overdrive8SetDriveEf
+     /tmp/cc4HmTtm.s:418    .text._ZN15Basic_Overdrive8SetDriveEf:0000000000000074 $d
+     /tmp/cc4HmTtm.s:424    .text._ZN15Basic_Overdrive4InitEf:0000000000000000 $t
+     /tmp/cc4HmTtm.s:431    .text._ZN15Basic_Overdrive4InitEf:0000000000000000 _ZN15Basic_Overdrive4InitEf
+     /tmp/cc4HmTtm.s:454    .text._ZN15Basic_Overdrive8SetParamEf:0000000000000000 $t
+     /tmp/cc4HmTtm.s:461    .text._ZN15Basic_Overdrive8SetParamEf:0000000000000000 _ZN15Basic_Overdrive8SetParamEf
+     /tmp/cc4HmTtm.s:524    .rodata._ZTV15Basic_Overdrive:0000000000000000 _ZTV15Basic_Overdrive
+     /tmp/cc4HmTtm.s:521    .rodata._ZTV15Basic_Overdrive:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc
