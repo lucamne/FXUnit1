@@ -6,6 +6,7 @@ void Basic_Overdrive::Init(float sample_rate)
 {
     m_sample_rate = sample_rate;
     SetDrive(.5f);
+    CycleParam(0);
 }
 
 float Basic_Overdrive::Process(float in)
@@ -28,11 +29,9 @@ void Basic_Overdrive::SetDrive(float drive)
     post_gain_ = 1.0f / daisysp::SoftClip(0.33f + drive_squashed * (pre_gain_ - 0.33f));
 }
 
-void Basic_Overdrive::CycleParam() 
+void Basic_Overdrive::CycleParam(int param) 
 {
-    m_current_param = (m_current_param + 1) % m_param_count; if (m_current_param >= m_param_count) m_current_param = 0;
-
-    switch (m_current_param)
+    switch (param)
     {
         case 0:
             m_current_param_name = "Mix";

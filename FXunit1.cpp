@@ -46,7 +46,7 @@ int main(void)
 	// init bypass
 	bypass.Init(hw_sample_rate);
 	// init delay
-	//delay.Init(hw_sample_rate);
+	delay.Init(hw_sample_rate);
 
 	// init encoder for switching modes
 	daisy::GPIO encoder_out_a{};

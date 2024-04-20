@@ -11,7 +11,7 @@ public:
 
     float Process(float val) {return val;}
 
-    void CycleParam() {m_current_param = 0;}
+    void CycleParam(int param) { return;}
 
     float SetParam(float val) {return val;}
 };

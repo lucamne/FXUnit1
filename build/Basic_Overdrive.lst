@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc4HmTtm.s 			page 1
+ARM GAS  /tmp/cceI8Dqj.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -16,26 +16,90 @@ ARM GAS  /tmp/cc4HmTtm.s 			page 1
   13              		.text
   14              	.Ltext0:
   15              		.cfi_sections	.debug_frame
-  16              		.section	.rodata._ZN15Basic_Overdrive10CycleParamEv.str1.1,"aMS",%progbits,1
-  17              	.LC0:
-  18 0000 4D697800 		.ascii	"Mix\000"
-  19              	.LC1:
-  20 0004 44726976 		.ascii	"Drive\000"
-  20      6500
-  21              	.LC2:
-  22 000a 3F00     		.ascii	"?\000"
-  23              		.section	.text._ZN15Basic_Overdrive10CycleParamEv,"ax",%progbits
-  24              		.align	1
-  25              		.global	_ZN15Basic_Overdrive10CycleParamEv
-  26              		.arch armv7e-m
-  27              		.syntax unified
-  28              		.thumb
-  29              		.thumb_func
-  30              		.fpu fpv5-d16
-  32              	_ZN15Basic_Overdrive10CycleParamEv:
-  33              	.LVL0:
-  34              	.LFB3530:
-  35              		.file 1 "Basic_Overdrive.cpp"
+  16              		.section	.text._ZN6Effect10CycleParamEv,"axG",%progbits,_ZN6Effect10CycleParamEv,comdat
+  17              		.align	1
+  18              		.weak	_ZN6Effect10CycleParamEv
+  19              		.arch armv7e-m
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv5-d16
+  25              	_ZN6Effect10CycleParamEv:
+  26              	.LVL0:
+  27              	.LFB3517:
+  28              		.file 1 "Effect.h"
+   1:Effect.h      **** #pragma once
+   2:Effect.h      **** 
+   3:Effect.h      **** #include <string>
+   4:Effect.h      **** 
+   5:Effect.h      **** class Effect
+   6:Effect.h      **** {
+   7:Effect.h      **** public:
+   8:Effect.h      ****     Effect(std::string effect_name, int param_count)
+   9:Effect.h      ****     :m_effect_name{effect_name}, m_sample_rate{48000.0f}, m_param_count{param_count}, m_current_par
+  10:Effect.h      ****     ~Effect() {}
+  11:Effect.h      ****     // general init function
+  12:Effect.h      ****     virtual void Init(float sample_rate) {m_sample_rate = sample_rate;}
+  13:Effect.h      ****     // processes sample 
+  14:Effect.h      ****     virtual float Process(float val) = 0;
+  15:Effect.h      ****     // cycles to next param
+  16:Effect.h      ****     virtual void CycleParam()
+  29              		.loc 1 16 18 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  17:Effect.h      ****     {
+  18:Effect.h      ****         m_current_param = (m_current_param + 1) % m_param_count; 
+  34              		.loc 1 18 9 view .LVU1
+  35              		.loc 1 18 44 is_stmt 0 view .LVU2
+  36 0000 D0E90823 		ldrd	r2, r3, [r0, #32]
+  37 0004 0133     		adds	r3, r3, #1
+  38              		.loc 1 18 49 view .LVU3
+  39 0006 93FBF2F1 		sdiv	r1, r3, r2
+  40 000a 02FB1133 		mls	r3, r2, r1, r3
+ARM GAS  /tmp/cceI8Dqj.s 			page 2
+
+
+  19:Effect.h      ****         if (m_current_param >= m_param_count) m_current_param = 0;
+  41              		.loc 1 19 9 is_stmt 1 view .LVU4
+  42 000e 9A42     		cmp	r2, r3
+  43              		.loc 1 19 47 view .LVU5
+  44              		.loc 1 19 63 is_stmt 0 view .LVU6
+  45 0010 D8BF     		it	le
+  46 0012 0023     		movle	r3, #0
+  47 0014 4362     		str	r3, [r0, #36]
+  20:Effect.h      ****         CycleParam(m_current_param);
+  48              		.loc 1 20 9 is_stmt 1 view .LVU7
+  49              		.loc 1 20 35 is_stmt 0 view .LVU8
+  50 0016 0368     		ldr	r3, [r0]
+  51              		.loc 1 20 19 view .LVU9
+  52 0018 416A     		ldr	r1, [r0, #36]
+  53 001a DB68     		ldr	r3, [r3, #12]
+  54 001c 1847     		bx	r3	@ indirect register sibling call
+  55              	.LVL1:
+  56              		.loc 1 20 19 view .LVU10
+  57              		.cfi_endproc
+  58              	.LFE3517:
+  60              		.section	.rodata._ZN15Basic_Overdrive10CycleParamEi.str1.1,"aMS",%progbits,1
+  61              	.LC0:
+  62 0000 4D697800 		.ascii	"Mix\000"
+  63              	.LC1:
+  64 0004 44726976 		.ascii	"Drive\000"
+  64      6500
+  65              	.LC2:
+  66 000a 3F00     		.ascii	"?\000"
+  67              		.section	.text._ZN15Basic_Overdrive10CycleParamEi,"ax",%progbits
+  68              		.align	1
+  69              		.global	_ZN15Basic_Overdrive10CycleParamEi
+  70              		.syntax unified
+  71              		.thumb
+  72              		.thumb_func
+  73              		.fpu fpv5-d16
+  75              	_ZN15Basic_Overdrive10CycleParamEi:
+  76              	.LVL2:
+  77              	.LFB3531:
+  78              		.file 2 "Basic_Overdrive.cpp"
    1:Basic_Overdrive.cpp **** #include "daisysp.h"
    2:Basic_Overdrive.cpp **** #include "Basic_Overdrive.h"
    3:Basic_Overdrive.cpp **** #include <algorithm>
@@ -44,143 +108,115 @@ ARM GAS  /tmp/cc4HmTtm.s 			page 1
    6:Basic_Overdrive.cpp **** {
    7:Basic_Overdrive.cpp ****     m_sample_rate = sample_rate;
    8:Basic_Overdrive.cpp ****     SetDrive(.5f);
-   9:Basic_Overdrive.cpp **** }
-  10:Basic_Overdrive.cpp **** 
-  11:Basic_Overdrive.cpp **** float Basic_Overdrive::Process(float in)
-  12:Basic_Overdrive.cpp **** {
-  13:Basic_Overdrive.cpp ****     float pre = pre_gain_ * in;
-  14:Basic_Overdrive.cpp ****     return (daisysp::SoftClip(pre) * post_gain_)*m_mix + in*(1-m_mix);
-  15:Basic_Overdrive.cpp **** }
-  16:Basic_Overdrive.cpp **** 
-  17:Basic_Overdrive.cpp **** void Basic_Overdrive::SetDrive(float drive)
-  18:Basic_Overdrive.cpp **** {
-  19:Basic_Overdrive.cpp ****     drive  = daisysp::fclamp(drive, 0.f, 1.f);
-  20:Basic_Overdrive.cpp ****     drive_ = 2.f * drive;
-  21:Basic_Overdrive.cpp **** 
-  22:Basic_Overdrive.cpp ****     const float drive_2    = drive_ * drive_;
-ARM GAS  /tmp/cc4HmTtm.s 			page 2
+   9:Basic_Overdrive.cpp ****     CycleParam(0);
+  10:Basic_Overdrive.cpp **** }
+  11:Basic_Overdrive.cpp **** 
+  12:Basic_Overdrive.cpp **** float Basic_Overdrive::Process(float in)
+  13:Basic_Overdrive.cpp **** {
+  14:Basic_Overdrive.cpp ****     float pre = pre_gain_ * in;
+  15:Basic_Overdrive.cpp ****     return (daisysp::SoftClip(pre) * post_gain_)*m_mix + in*(1-m_mix);
+  16:Basic_Overdrive.cpp **** }
+  17:Basic_Overdrive.cpp **** 
+  18:Basic_Overdrive.cpp **** void Basic_Overdrive::SetDrive(float drive)
+ARM GAS  /tmp/cceI8Dqj.s 			page 3
 
 
-  23:Basic_Overdrive.cpp ****     const float pre_gain_a = drive_ * 0.5f;
-  24:Basic_Overdrive.cpp ****     const float pre_gain_b = drive_2 * drive_2 * drive_ * 24.0f;
-  25:Basic_Overdrive.cpp ****     pre_gain_              = pre_gain_a + (pre_gain_b - pre_gain_a) * drive_2;
-  26:Basic_Overdrive.cpp **** 
-  27:Basic_Overdrive.cpp ****     const float drive_squashed = drive_ * (2.0f - drive_);
-  28:Basic_Overdrive.cpp ****     post_gain_ = 1.0f / daisysp::SoftClip(0.33f + drive_squashed * (pre_gain_ - 0.33f));
-  29:Basic_Overdrive.cpp **** }
-  30:Basic_Overdrive.cpp **** 
-  31:Basic_Overdrive.cpp **** void Basic_Overdrive::CycleParam() 
-  32:Basic_Overdrive.cpp **** {
-  36              		.loc 1 32 1 view -0
-  37              		.cfi_startproc
-  38              		@ args = 0, pretend = 0, frame = 0
-  39              		@ frame_needed = 0, uses_anonymous_args = 0
-  40              		@ link register save eliminated.
-  33:Basic_Overdrive.cpp ****     m_current_param = (m_current_param + 1) % m_param_count; if (m_current_param >= m_param_count) 
-  41              		.loc 1 33 5 view .LVU1
-  42              		.loc 1 33 40 is_stmt 0 view .LVU2
-  43 0000 D0E90813 		ldrd	r1, r3, [r0, #32]
-  32:Basic_Overdrive.cpp ****     m_current_param = (m_current_param + 1) % m_param_count; if (m_current_param >= m_param_count) 
-  44              		.loc 1 32 1 view .LVU3
-  45 0004 0246     		mov	r2, r0
-  46              		.loc 1 33 40 view .LVU4
-  47 0006 0133     		adds	r3, r3, #1
-  48              		.loc 1 33 45 view .LVU5
-  49 0008 93FBF1F0 		sdiv	r0, r3, r1
-  50              	.LVL1:
-  51              		.loc 1 33 45 view .LVU6
-  52 000c 01FB1033 		mls	r3, r1, r0, r3
-  34:Basic_Overdrive.cpp **** 
-  35:Basic_Overdrive.cpp ****     switch (m_current_param)
-  36:Basic_Overdrive.cpp ****     {
-  37:Basic_Overdrive.cpp ****         case 0:
-  38:Basic_Overdrive.cpp ****             m_current_param_name = "Mix";
-  39:Basic_Overdrive.cpp ****             break;
-  40:Basic_Overdrive.cpp ****         case 1:
-  41:Basic_Overdrive.cpp ****             m_current_param_name = "Drive";
-  53              		.loc 1 41 36 view .LVU7
-  54 0010 02F12800 		add	r0, r2, #40
-  33:Basic_Overdrive.cpp **** 
-  55              		.loc 1 33 62 view .LVU8
-  56 0014 9942     		cmp	r1, r3
-  33:Basic_Overdrive.cpp **** 
-  57              		.loc 1 33 21 view .LVU9
-  58 0016 5362     		str	r3, [r2, #36]
-  33:Basic_Overdrive.cpp **** 
-  59              		.loc 1 33 62 is_stmt 1 view .LVU10
-  60 0018 04DC     		bgt	.L2
-  33:Basic_Overdrive.cpp **** 
-  61              		.loc 1 33 100 discriminator 1 view .LVU11
-  33:Basic_Overdrive.cpp **** 
-  62              		.loc 1 33 116 is_stmt 0 discriminator 1 view .LVU12
-  63 001a 0023     		movs	r3, #0
-  64 001c 5362     		str	r3, [r2, #36]
+  19:Basic_Overdrive.cpp **** {
+  20:Basic_Overdrive.cpp ****     drive  = daisysp::fclamp(drive, 0.f, 1.f);
+  21:Basic_Overdrive.cpp ****     drive_ = 2.f * drive;
+  22:Basic_Overdrive.cpp **** 
+  23:Basic_Overdrive.cpp ****     const float drive_2    = drive_ * drive_;
+  24:Basic_Overdrive.cpp ****     const float pre_gain_a = drive_ * 0.5f;
+  25:Basic_Overdrive.cpp ****     const float pre_gain_b = drive_2 * drive_2 * drive_ * 24.0f;
+  26:Basic_Overdrive.cpp ****     pre_gain_              = pre_gain_a + (pre_gain_b - pre_gain_a) * drive_2;
+  27:Basic_Overdrive.cpp **** 
+  28:Basic_Overdrive.cpp ****     const float drive_squashed = drive_ * (2.0f - drive_);
+  29:Basic_Overdrive.cpp ****     post_gain_ = 1.0f / daisysp::SoftClip(0.33f + drive_squashed * (pre_gain_ - 0.33f));
+  30:Basic_Overdrive.cpp **** }
+  31:Basic_Overdrive.cpp **** 
+  32:Basic_Overdrive.cpp **** void Basic_Overdrive::CycleParam(int param) 
+  33:Basic_Overdrive.cpp **** {
+  79              		.loc 2 33 1 is_stmt 1 view -0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 0
+  82              		@ frame_needed = 0, uses_anonymous_args = 0
+  83              		@ link register save eliminated.
+  34:Basic_Overdrive.cpp ****     switch (param)
+  84              		.loc 2 34 5 view .LVU12
   35:Basic_Overdrive.cpp ****     {
-  65              		.loc 1 35 5 is_stmt 1 discriminator 1 view .LVU13
-  66              	.L3:
-ARM GAS  /tmp/cc4HmTtm.s 			page 3
-
-
+  36:Basic_Overdrive.cpp ****         case 0:
   37:Basic_Overdrive.cpp ****             m_current_param_name = "Mix";
-  67              		.loc 1 37 9 view .LVU14
+  85              		.loc 2 37 36 is_stmt 0 view .LVU13
+  86 0000 2830     		adds	r0, r0, #40
+  87              	.LVL3:
+  34:Basic_Overdrive.cpp ****     switch (param)
+  88              		.loc 2 34 5 view .LVU14
+  89 0002 19B1     		cbz	r1, .L6
+  90 0004 0129     		cmp	r1, #1
+  91 0006 04D0     		beq	.L7
   38:Basic_Overdrive.cpp ****             break;
-  68              		.loc 1 38 13 view .LVU15
-  38:Basic_Overdrive.cpp ****             break;
-  69              		.loc 1 38 36 is_stmt 0 view .LVU16
-  70 001e 0549     		ldr	r1, .L11
-  71              	.L10:
-  42:Basic_Overdrive.cpp ****             break;
-  43:Basic_Overdrive.cpp ****         default:
-  44:Basic_Overdrive.cpp ****             m_current_param_name = "?";
-  72              		.loc 1 44 36 view .LVU17
-  73 0020 FFF7FEBF 		b	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc
-  74              	.LVL2:
-  75              	.L2:
-  35:Basic_Overdrive.cpp ****     {
-  76              		.loc 1 35 5 is_stmt 1 view .LVU18
-  77 0024 002B     		cmp	r3, #0
-  78 0026 FAD0     		beq	.L3
-  79 0028 012B     		cmp	r3, #1
-  80 002a 01D0     		beq	.L4
-  43:Basic_Overdrive.cpp ****             m_current_param_name = "?";
-  81              		.loc 1 43 9 view .LVU19
-  82              		.loc 1 44 13 view .LVU20
-  83              		.loc 1 44 36 is_stmt 0 view .LVU21
-  84 002c 0249     		ldr	r1, .L11+4
-  85 002e F7E7     		b	.L10
-  86              	.L4:
+  39:Basic_Overdrive.cpp ****         case 1:
   40:Basic_Overdrive.cpp ****             m_current_param_name = "Drive";
-  87              		.loc 1 40 9 is_stmt 1 view .LVU22
   41:Basic_Overdrive.cpp ****             break;
-  88              		.loc 1 41 13 view .LVU23
-  41:Basic_Overdrive.cpp ****             break;
-  89              		.loc 1 41 36 is_stmt 0 view .LVU24
-  90 0030 0249     		ldr	r1, .L11+8
-  91 0032 F5E7     		b	.L10
-  92              	.L12:
-  93              		.align	2
-  94              	.L11:
-  95 0034 00000000 		.word	.LC0
-  96 0038 0A000000 		.word	.LC2
-  97 003c 04000000 		.word	.LC1
-  98              		.cfi_endproc
-  99              	.LFE3530:
- 101              		.section	.text._ZN7daisysp8SoftClipEf,"axG",%progbits,_ZN7daisysp8SoftClipEf,comdat
- 102              		.align	1
- 103              		.weak	_ZN7daisysp8SoftClipEf
- 104              		.syntax unified
- 105              		.thumb
- 106              		.thumb_func
- 107              		.fpu fpv5-d16
- 109              	_ZN7daisysp8SoftClipEf:
- 110              	.LVL3:
- 111              	.LFB2816:
- 112              		.file 2 "/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h"
+  42:Basic_Overdrive.cpp ****         default:
+  92              		.loc 2 42 9 is_stmt 1 view .LVU15
+  43:Basic_Overdrive.cpp ****             m_current_param_name = "?";
+  93              		.loc 2 43 13 view .LVU16
+  94              		.loc 2 43 36 is_stmt 0 view .LVU17
+  95 0008 0349     		ldr	r1, .L11
+  96              	.LVL4:
+  97              		.loc 2 43 36 view .LVU18
+  98 000a 00E0     		b	.L10
+  99              	.LVL5:
+ 100              	.L6:
+  36:Basic_Overdrive.cpp ****             m_current_param_name = "Mix";
+ 101              		.loc 2 36 9 is_stmt 1 view .LVU19
+  37:Basic_Overdrive.cpp ****             break;
+ 102              		.loc 2 37 13 view .LVU20
+  37:Basic_Overdrive.cpp ****             break;
+ 103              		.loc 2 37 36 is_stmt 0 view .LVU21
+ 104 000c 0349     		ldr	r1, .L11+4
+ 105              	.LVL6:
+ 106              	.L10:
+ARM GAS  /tmp/cceI8Dqj.s 			page 4
+
+
+ 107              		.loc 2 43 36 view .LVU22
+ 108 000e FFF7FEBF 		b	_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc
+ 109              	.LVL7:
+ 110              	.L7:
+  39:Basic_Overdrive.cpp ****             m_current_param_name = "Drive";
+ 111              		.loc 2 39 9 is_stmt 1 view .LVU23
+  40:Basic_Overdrive.cpp ****             break;
+ 112              		.loc 2 40 13 view .LVU24
+  40:Basic_Overdrive.cpp ****             break;
+ 113              		.loc 2 40 36 is_stmt 0 view .LVU25
+ 114 0012 0349     		ldr	r1, .L11+8
+ 115              	.LVL8:
+  40:Basic_Overdrive.cpp ****             break;
+ 116              		.loc 2 40 36 view .LVU26
+ 117 0014 FBE7     		b	.L10
+ 118              	.L12:
+ 119 0016 00BF     		.align	2
+ 120              	.L11:
+ 121 0018 0A000000 		.word	.LC2
+ 122 001c 00000000 		.word	.LC0
+ 123 0020 04000000 		.word	.LC1
+ 124              		.cfi_endproc
+ 125              	.LFE3531:
+ 127              		.section	.text._ZN7daisysp8SoftClipEf,"axG",%progbits,_ZN7daisysp8SoftClipEf,comdat
+ 128              		.align	1
+ 129              		.weak	_ZN7daisysp8SoftClipEf
+ 130              		.syntax unified
+ 131              		.thumb
+ 132              		.thumb_func
+ 133              		.fpu fpv5-d16
+ 135              	_ZN7daisysp8SoftClipEf:
+ 136              	.LVL9:
+ 137              	.LFB2816:
+ 138              		.file 3 "/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h"
    1:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** /*
    2:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** Copyright (c) 2020 Electrosmith, Corp, Emilie Gillet
-ARM GAS  /tmp/cc4HmTtm.s 			page 4
-
-
    3:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** 
    4:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** Use of this source code is governed by an MIT-style
    5:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** license that can be found in the LICENSE file or at
@@ -202,6 +238,9 @@ ARM GAS  /tmp/cc4HmTtm.s 			page 1
   21:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #define PI_F 3.1415927410125732421875f
   22:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #define TWOPI_F (2.0f * PI_F)
   23:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #define HALFPI_F (PI_F * 0.5f)
+ARM GAS  /tmp/cceI8Dqj.s 			page 5
+
+
   24:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #define DSY_MIN(in, mn) (in < mn ? in : mn)
   25:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #define DSY_MAX(in, mx) (in > mx ? in : mx)
   26:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #define DSY_CLAMP(in, mn, mx) (DSY_MIN(DSY_MAX(in, mn), mx))
@@ -238,9 +277,6 @@ ARM GAS  /tmp/cc4HmTtm.s 			page 1
   57:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     r = (a < b) ? a : b;
   58:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #endif // __arm__
   59:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     return r;
-ARM GAS  /tmp/cc4HmTtm.s 			page 5
-
-
   60:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
   61:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** 
   62:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** /** quick fp clamp
@@ -262,6 +298,9 @@ ARM GAS  /tmp/cc4HmTtm.s 			page 1
   78:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     l -= 0x3F800000;
   79:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     l <<= (n - 1);
   80:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     l += 0x3F800000;
+ARM GAS  /tmp/cceI8Dqj.s 			page 6
+
+
   81:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     *lp = l;
   82:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     return f;
   83:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
@@ -298,9 +337,6 @@ ARM GAS  /tmp/cc4HmTtm.s 			page 1
  114:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** About 25% performance increase over std::log10f
  115:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** */
  116:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** inline float fastlog2f(float f)
-ARM GAS  /tmp/cc4HmTtm.s 			page 6
-
-
  117:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** {
  118:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     float frac;
  119:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     int   exp;
@@ -322,6 +358,9 @@ ARM GAS  /tmp/cc4HmTtm.s 			page 1
  135:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
  136:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** 
  137:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** /** Midi to frequency helper
+ARM GAS  /tmp/cceI8Dqj.s 			page 7
+
+
  138:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** */
  139:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** inline float mtof(float m)
  140:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** {
@@ -358,9 +397,6 @@ ARM GAS  /tmp/cc4HmTtm.s 			page 1
  171:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****  *
  172:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****  *  When using the log curve min and max, must be greater than zero.
  173:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****  *
-ARM GAS  /tmp/cc4HmTtm.s 			page 7
-
-
  174:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****  *  \retval returns the transformed float within the new range.
  175:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** */
  176:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** inline float
@@ -382,6 +418,9 @@ ARM GAS  /tmp/cc4HmTtm.s 			page 1
  192:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** 
  193:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** /** Simple 3-point median filter
  194:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** c/o stephen mccaul
+ARM GAS  /tmp/cceI8Dqj.s 			page 8
+
+
  195:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** */
  196:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** template <typename T>
  197:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** T median(T a, T b, T c)
@@ -418,9 +457,6 @@ ARM GAS  /tmp/cc4HmTtm.s 			page 1
  228:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** /** Ported from pichenettes/eurorack/plaits/dsp/oscillator/oscillator.h
  229:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** */
  230:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** inline float ThisIntegratedBlepSample(float t)
-ARM GAS  /tmp/cc4HmTtm.s 			page 8
-
-
  231:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** {
  232:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     return NextIntegratedBlepSample(1.0f - t);
  233:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
@@ -434,640 +470,674 @@ ARM GAS  /tmp/cc4HmTtm.s 			page 1
  241:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** /** Soft Clipping function extracted from pichenettes/stmlib */
  242:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** inline float SoftClip(float x)
  243:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** {
- 113              		.loc 2 243 1 is_stmt 1 view -0
- 114              		.cfi_startproc
- 115              		@ args = 0, pretend = 0, frame = 0
- 116              		@ frame_needed = 0, uses_anonymous_args = 0
- 117              		@ link register save eliminated.
+ 139              		.loc 3 243 1 is_stmt 1 view -0
+ 140              		.cfi_startproc
+ 141              		@ args = 0, pretend = 0, frame = 0
+ 142              		@ frame_needed = 0, uses_anonymous_args = 0
+ 143              		@ link register save eliminated.
  244:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     if(x < -3.0f)
- 118              		.loc 2 244 5 view .LVU26
- 119 0000 F8EE087A 		vmov.f32	s15, #-3.0e+0
- 120 0004 B4EEE70A 		vcmpe.f32	s0, s15
- 121 0008 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 122 000c 17D4     		bmi	.L15
- 123              	.LVL4:
- 124              	.LBB20:
- 125              	.LBI20:
+ 144              		.loc 3 244 5 view .LVU28
+ 145 0000 F8EE087A 		vmov.f32	s15, #-3.0e+0
+ARM GAS  /tmp/cceI8Dqj.s 			page 9
+
+
+ 146 0004 B4EEE70A 		vcmpe.f32	s0, s15
+ 147 0008 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 148 000c 17D4     		bmi	.L15
+ 149              	.LVL10:
+ 150              	.LBB20:
+ 151              	.LBI20:
  242:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** {
- 126              		.loc 2 242 14 view .LVU27
- 127              	.LBB21:
+ 152              		.loc 3 242 14 view .LVU29
+ 153              	.LBB21:
  245:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****         return -1.0f;
  246:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     else if(x > 3.0f)
- 128              		.loc 2 246 10 view .LVU28
- 129 000e F0EE087A 		vmov.f32	s15, #3.0e+0
- 130 0012 B4EEE70A 		vcmpe.f32	s0, s15
- 131 0016 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 132 001a 13DC     		bgt	.L16
+ 154              		.loc 3 246 10 view .LVU30
+ 155 000e F0EE087A 		vmov.f32	s15, #3.0e+0
+ 156 0012 B4EEE70A 		vcmpe.f32	s0, s15
+ 157 0016 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 158 001a 13DC     		bgt	.L16
  247:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****         return 1.0f;
  248:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     else
  249:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****         return SoftLimit(x);
- 133              		.loc 2 249 9 view .LVU29
- 134              	.LVL5:
- 135              	.LBB22:
- 136              	.LBI22:
+ 159              		.loc 3 249 9 view .LVU31
+ 160              	.LVL11:
+ 161              	.LBB22:
+ 162              	.LBI22:
  236:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** {
- 137              		.loc 2 236 14 view .LVU30
- 138              	.LBB23:
+ 163              		.loc 3 236 14 view .LVU32
+ 164              	.LBB23:
  238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 139              		.loc 2 238 5 view .LVU31
+ 165              		.loc 3 238 5 view .LVU33
  238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 140              		.loc 2 238 22 is_stmt 0 view .LVU32
- 141 001c F3EE0B7A 		vmov.f32	s15, #2.7e+1
+ 166              		.loc 3 238 22 is_stmt 0 view .LVU34
+ 167 001c F3EE0B7A 		vmov.f32	s15, #2.7e+1
  238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 142              		.loc 2 238 45 view .LVU33
- 143 0020 F2EE026A 		vmov.f32	s13, #9.0e+0
+ 168              		.loc 3 238 45 view .LVU35
+ 169 0020 F2EE026A 		vmov.f32	s13, #9.0e+0
  238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 144              		.loc 2 238 22 view .LVU34
-ARM GAS  /tmp/cc4HmTtm.s 			page 9
+ 170              		.loc 3 238 22 view .LVU36
+ 171 0024 B0EE677A 		vmov.f32	s14, s15
+ 238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
+ 172              		.loc 3 238 45 view .LVU37
+ 173 0028 60EE266A 		vmul.f32	s13, s0, s13
+ 238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
+ 174              		.loc 3 238 22 view .LVU38
+ 175 002c A0EE007A 		vfma.f32	s14, s0, s0
+ 238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
+ 176              		.loc 3 238 39 view .LVU39
+ 177 0030 E0EE267A 		vfma.f32	s15, s0, s13
+ 238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
+ 178              		.loc 3 238 14 view .LVU40
+ 179 0034 20EE077A 		vmul.f32	s14, s0, s14
+ 238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
+ 180              		.loc 3 238 52 view .LVU41
+ 181 0038 87EE270A 		vdiv.f32	s0, s14, s15
+ 182              	.LVL12:
+ 238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
+ 183              		.loc 3 238 52 view .LVU42
+ 184              	.LBE23:
+ 185              	.LBE22:
+ARM GAS  /tmp/cceI8Dqj.s 			page 10
 
 
- 145 0024 B0EE677A 		vmov.f32	s14, s15
- 238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 146              		.loc 2 238 45 view .LVU35
- 147 0028 60EE266A 		vmul.f32	s13, s0, s13
- 238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 148              		.loc 2 238 22 view .LVU36
- 149 002c A0EE007A 		vfma.f32	s14, s0, s0
- 238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 150              		.loc 2 238 39 view .LVU37
- 151 0030 E0EE267A 		vfma.f32	s15, s0, s13
- 238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 152              		.loc 2 238 14 view .LVU38
- 153 0034 20EE077A 		vmul.f32	s14, s0, s14
- 238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 154              		.loc 2 238 52 view .LVU39
- 155 0038 87EE270A 		vdiv.f32	s0, s14, s15
- 156              	.LVL6:
- 238:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 157              		.loc 2 238 52 view .LVU40
- 158              	.LBE23:
- 159              	.LBE22:
- 160              		.loc 2 249 27 view .LVU41
- 161 003c 7047     		bx	lr
- 162              	.LVL7:
- 163              	.L15:
- 164              		.loc 2 249 27 view .LVU42
- 165              	.LBE21:
- 166              	.LBE20:
+ 186              		.loc 3 249 27 view .LVU43
+ 187 003c 7047     		bx	lr
+ 188              	.LVL13:
+ 189              	.L15:
+ 190              		.loc 3 249 27 view .LVU44
+ 191              	.LBE21:
+ 192              	.LBE20:
  245:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     else if(x > 3.0f)
- 167              		.loc 2 245 17 view .LVU43
- 168 003e BFEE000A 		vmov.f32	s0, #-1.0e+0
- 169              	.LVL8:
+ 193              		.loc 3 245 17 view .LVU45
+ 194 003e BFEE000A 		vmov.f32	s0, #-1.0e+0
+ 195              	.LVL14:
  245:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     else if(x > 3.0f)
- 170              		.loc 2 245 17 view .LVU44
- 171 0042 7047     		bx	lr
- 172              	.LVL9:
- 173              	.L16:
- 174              	.LBB25:
- 175              	.LBB24:
+ 196              		.loc 3 245 17 view .LVU46
+ 197 0042 7047     		bx	lr
+ 198              	.LVL15:
+ 199              	.L16:
+ 200              	.LBB25:
+ 201              	.LBB24:
  247:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     else
- 176              		.loc 2 247 16 view .LVU45
- 177 0044 B7EE000A 		vmov.f32	s0, #1.0e+0
- 178              	.LVL10:
+ 202              		.loc 3 247 16 view .LVU47
+ 203 0044 B7EE000A 		vmov.f32	s0, #1.0e+0
+ 204              	.LVL16:
  247:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h ****     else
- 179              		.loc 2 247 16 view .LVU46
- 180              	.LBE24:
- 181              	.LBE25:
+ 205              		.loc 3 247 16 view .LVU48
+ 206              	.LBE24:
+ 207              	.LBE25:
  250:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 182              		.loc 2 250 1 view .LVU47
- 183 0048 7047     		bx	lr
- 184              		.cfi_endproc
- 185              	.LFE2816:
- 187              		.section	.text._ZN15Basic_Overdrive7ProcessEf,"ax",%progbits
- 188              		.align	1
- 189              		.global	_ZN15Basic_Overdrive7ProcessEf
- 190              		.syntax unified
- 191              		.thumb
-ARM GAS  /tmp/cc4HmTtm.s 			page 10
+ 208              		.loc 3 250 1 view .LVU49
+ 209 0048 7047     		bx	lr
+ 210              		.cfi_endproc
+ 211              	.LFE2816:
+ 213              		.section	.text._ZN15Basic_Overdrive7ProcessEf,"ax",%progbits
+ 214              		.align	1
+ 215              		.global	_ZN15Basic_Overdrive7ProcessEf
+ 216              		.syntax unified
+ 217              		.thumb
+ 218              		.thumb_func
+ 219              		.fpu fpv5-d16
+ 221              	_ZN15Basic_Overdrive7ProcessEf:
+ 222              	.LVL17:
+ 223              	.LFB3529:
+  13:Basic_Overdrive.cpp ****     float pre = pre_gain_ * in;
+ 224              		.loc 2 13 1 is_stmt 1 view -0
+ 225              		.cfi_startproc
+ 226              		@ args = 0, pretend = 0, frame = 0
+ 227              		@ frame_needed = 0, uses_anonymous_args = 0
+  14:Basic_Overdrive.cpp ****     return (daisysp::SoftClip(pre) * post_gain_)*m_mix + in*(1-m_mix);
+ 228              		.loc 2 14 5 view .LVU51
+  13:Basic_Overdrive.cpp ****     float pre = pre_gain_ * in;
+ 229              		.loc 2 13 1 is_stmt 0 view .LVU52
+ 230 0000 10B5     		push	{r4, lr}
+ 231              		.cfi_def_cfa_offset 8
+ 232              		.cfi_offset 4, -8
+ 233              		.cfi_offset 14, -4
+ 234 0002 2DED028B 		vpush.64	{d8}
+ 235              		.cfi_def_cfa_offset 16
+ 236              		.cfi_offset 80, -16
+ARM GAS  /tmp/cceI8Dqj.s 			page 11
 
 
- 192              		.thumb_func
- 193              		.fpu fpv5-d16
- 195              	_ZN15Basic_Overdrive7ProcessEf:
- 196              	.LVL11:
- 197              	.LFB3528:
-  12:Basic_Overdrive.cpp ****     float pre = pre_gain_ * in;
- 198              		.loc 1 12 1 is_stmt 1 view -0
- 199              		.cfi_startproc
- 200              		@ args = 0, pretend = 0, frame = 0
- 201              		@ frame_needed = 0, uses_anonymous_args = 0
-  13:Basic_Overdrive.cpp ****     return (daisysp::SoftClip(pre) * post_gain_)*m_mix + in*(1-m_mix);
- 202              		.loc 1 13 5 view .LVU49
-  12:Basic_Overdrive.cpp ****     float pre = pre_gain_ * in;
- 203              		.loc 1 12 1 is_stmt 0 view .LVU50
- 204 0000 10B5     		push	{r4, lr}
- 205              		.cfi_def_cfa_offset 8
- 206              		.cfi_offset 4, -8
- 207              		.cfi_offset 14, -4
- 208 0002 2DED028B 		vpush.64	{d8}
- 209              		.cfi_def_cfa_offset 16
- 210              		.cfi_offset 80, -16
- 211              		.cfi_offset 81, -12
-  12:Basic_Overdrive.cpp ****     float pre = pre_gain_ * in;
- 212              		.loc 1 12 1 view .LVU51
- 213 0006 B0EE408A 		vmov.f32	s16, s0
- 214              	.LVL12:
-  14:Basic_Overdrive.cpp **** }
- 215              		.loc 1 14 5 is_stmt 1 view .LVU52
-  13:Basic_Overdrive.cpp ****     return (daisysp::SoftClip(pre) * post_gain_)*m_mix + in*(1-m_mix);
- 216              		.loc 1 13 11 is_stmt 0 view .LVU53
- 217 000a 90ED110A 		vldr.32	s0, [r0, #68]
- 218              	.LVL13:
-  12:Basic_Overdrive.cpp ****     float pre = pre_gain_ * in;
- 219              		.loc 1 12 1 view .LVU54
- 220 000e 0446     		mov	r4, r0
-  14:Basic_Overdrive.cpp **** }
- 221              		.loc 1 14 30 view .LVU55
- 222 0010 28EE000A 		vmul.f32	s0, s16, s0
- 223              	.LVL14:
-  14:Basic_Overdrive.cpp **** }
- 224              		.loc 1 14 30 view .LVU56
- 225 0014 FFF7FEFF 		bl	_ZN7daisysp8SoftClipEf
- 226              	.LVL15:
-  14:Basic_Overdrive.cpp **** }
- 227              		.loc 1 14 63 view .LVU57
- 228 0018 F7EE007A 		vmov.f32	s15, #1.0e+0
-  14:Basic_Overdrive.cpp **** }
- 229              		.loc 1 14 50 view .LVU58
- 230 001c D4ED136A 		vldr.32	s13, [r4, #76]
-  14:Basic_Overdrive.cpp **** }
- 231              		.loc 1 14 36 view .LVU59
- 232 0020 94ED127A 		vldr.32	s14, [r4, #72]
-  14:Basic_Overdrive.cpp **** }
- 233              		.loc 1 14 63 view .LVU60
- 234 0024 77EEE67A 		vsub.f32	s15, s15, s13
-  14:Basic_Overdrive.cpp **** }
- 235              		.loc 1 14 36 view .LVU61
-ARM GAS  /tmp/cc4HmTtm.s 			page 11
+ 237              		.cfi_offset 81, -12
+  13:Basic_Overdrive.cpp ****     float pre = pre_gain_ * in;
+ 238              		.loc 2 13 1 view .LVU53
+ 239 0006 B0EE408A 		vmov.f32	s16, s0
+ 240              	.LVL18:
+  15:Basic_Overdrive.cpp **** }
+ 241              		.loc 2 15 5 is_stmt 1 view .LVU54
+  14:Basic_Overdrive.cpp ****     return (daisysp::SoftClip(pre) * post_gain_)*m_mix + in*(1-m_mix);
+ 242              		.loc 2 14 11 is_stmt 0 view .LVU55
+ 243 000a 90ED110A 		vldr.32	s0, [r0, #68]
+ 244              	.LVL19:
+  13:Basic_Overdrive.cpp ****     float pre = pre_gain_ * in;
+ 245              		.loc 2 13 1 view .LVU56
+ 246 000e 0446     		mov	r4, r0
+  15:Basic_Overdrive.cpp **** }
+ 247              		.loc 2 15 30 view .LVU57
+ 248 0010 28EE000A 		vmul.f32	s0, s16, s0
+ 249              	.LVL20:
+  15:Basic_Overdrive.cpp **** }
+ 250              		.loc 2 15 30 view .LVU58
+ 251 0014 FFF7FEFF 		bl	_ZN7daisysp8SoftClipEf
+ 252              	.LVL21:
+  15:Basic_Overdrive.cpp **** }
+ 253              		.loc 2 15 63 view .LVU59
+ 254 0018 F7EE007A 		vmov.f32	s15, #1.0e+0
+  15:Basic_Overdrive.cpp **** }
+ 255              		.loc 2 15 50 view .LVU60
+ 256 001c D4ED136A 		vldr.32	s13, [r4, #76]
+  15:Basic_Overdrive.cpp **** }
+ 257              		.loc 2 15 36 view .LVU61
+ 258 0020 94ED127A 		vldr.32	s14, [r4, #72]
+  15:Basic_Overdrive.cpp **** }
+ 259              		.loc 2 15 63 view .LVU62
+ 260 0024 77EEE67A 		vsub.f32	s15, s15, s13
+  15:Basic_Overdrive.cpp **** }
+ 261              		.loc 2 15 36 view .LVU63
+ 262 0028 20EE077A 		vmul.f32	s14, s0, s14
+  15:Basic_Overdrive.cpp **** }
+ 263              		.loc 2 15 60 view .LVU64
+ 264 002c 27EE880A 		vmul.f32	s0, s15, s16
+  16:Basic_Overdrive.cpp **** 
+ 265              		.loc 2 16 1 view .LVU65
+ 266 0030 BDEC028B 		vldm	sp!, {d8}
+ 267              		.cfi_restore 80
+ 268              		.cfi_restore 81
+ 269              		.cfi_def_cfa_offset 8
+ 270              	.LVL22:
+  16:Basic_Overdrive.cpp **** 
+ 271              		.loc 2 16 1 view .LVU66
+ 272 0034 A7EE260A 		vfma.f32	s0, s14, s13
+ 273 0038 10BD     		pop	{r4, pc}
+  16:Basic_Overdrive.cpp **** 
+ 274              		.loc 2 16 1 view .LVU67
+ 275              		.cfi_endproc
+ 276              	.LFE3529:
+ 278              		.section	.text._ZN15Basic_Overdrive8SetDriveEf,"ax",%progbits
+ 279              		.align	1
+ARM GAS  /tmp/cceI8Dqj.s 			page 12
 
 
- 236 0028 20EE077A 		vmul.f32	s14, s0, s14
-  14:Basic_Overdrive.cpp **** }
- 237              		.loc 1 14 60 view .LVU62
- 238 002c 27EE880A 		vmul.f32	s0, s15, s16
-  15:Basic_Overdrive.cpp **** 
- 239              		.loc 1 15 1 view .LVU63
- 240 0030 BDEC028B 		vldm	sp!, {d8}
- 241              		.cfi_restore 80
- 242              		.cfi_restore 81
- 243              		.cfi_def_cfa_offset 8
- 244              	.LVL16:
-  15:Basic_Overdrive.cpp **** 
- 245              		.loc 1 15 1 view .LVU64
- 246 0034 A7EE260A 		vfma.f32	s0, s14, s13
- 247 0038 10BD     		pop	{r4, pc}
-  15:Basic_Overdrive.cpp **** 
- 248              		.loc 1 15 1 view .LVU65
- 249              		.cfi_endproc
- 250              	.LFE3528:
- 252              		.section	.text._ZN15Basic_Overdrive8SetDriveEf,"ax",%progbits
- 253              		.align	1
- 254              		.global	_ZN15Basic_Overdrive8SetDriveEf
- 255              		.syntax unified
- 256              		.thumb
- 257              		.thumb_func
- 258              		.fpu fpv5-d16
- 260              	_ZN15Basic_Overdrive8SetDriveEf:
- 261              	.LVL17:
- 262              	.LFB3529:
-  18:Basic_Overdrive.cpp ****     drive  = daisysp::fclamp(drive, 0.f, 1.f);
- 263              		.loc 1 18 1 is_stmt 1 view -0
- 264              		.cfi_startproc
- 265              		@ args = 0, pretend = 0, frame = 0
- 266              		@ frame_needed = 0, uses_anonymous_args = 0
-  19:Basic_Overdrive.cpp ****     drive_ = 2.f * drive;
- 267              		.loc 1 19 5 view .LVU67
- 268              	.LBB26:
- 269              	.LBI26:
+ 280              		.global	_ZN15Basic_Overdrive8SetDriveEf
+ 281              		.syntax unified
+ 282              		.thumb
+ 283              		.thumb_func
+ 284              		.fpu fpv5-d16
+ 286              	_ZN15Basic_Overdrive8SetDriveEf:
+ 287              	.LVL23:
+ 288              	.LFB3530:
+  19:Basic_Overdrive.cpp ****     drive  = daisysp::fclamp(drive, 0.f, 1.f);
+ 289              		.loc 2 19 1 is_stmt 1 view -0
+ 290              		.cfi_startproc
+ 291              		@ args = 0, pretend = 0, frame = 0
+ 292              		@ frame_needed = 0, uses_anonymous_args = 0
+  20:Basic_Overdrive.cpp ****     drive_ = 2.f * drive;
+ 293              		.loc 2 20 5 view .LVU69
+ 294              	.LBB26:
+ 295              	.LBI26:
   64:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** {
- 270              		.loc 2 64 14 view .LVU68
- 271              	.LBE26:
+ 296              		.loc 3 64 14 view .LVU70
+ 297              	.LBE26:
   66:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 272              		.loc 2 66 5 view .LVU69
- 273              	.LBB39:
- 274              	.LBB27:
- 275              	.LBI27:
+ 298              		.loc 3 66 5 view .LVU71
+ 299              	.LBB39:
+ 300              	.LBB27:
+ 301              	.LBI27:
   40:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** {
- 276              		.loc 2 40 14 view .LVU70
- 277              	.LBB28:
+ 302              		.loc 3 40 14 view .LVU72
+ 303              	.LBB28:
   42:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #ifdef __arm__
- 278              		.loc 2 42 5 view .LVU71
+ 304              		.loc 3 42 5 view .LVU73
   44:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #else
- 279              		.loc 2 44 5 view .LVU72
- 280              	.LBE28:
- 281              	.LBE27:
- 282              	.LBE39:
-  18:Basic_Overdrive.cpp ****     drive  = daisysp::fclamp(drive, 0.f, 1.f);
-ARM GAS  /tmp/cc4HmTtm.s 			page 12
+ 305              		.loc 3 44 5 view .LVU74
+ 306              	.LBE28:
+ 307              	.LBE27:
+ 308              	.LBE39:
+  19:Basic_Overdrive.cpp ****     drive  = daisysp::fclamp(drive, 0.f, 1.f);
+ 309              		.loc 2 19 1 is_stmt 0 view .LVU75
+ 310 0000 10B5     		push	{r4, lr}
+ 311              		.cfi_def_cfa_offset 8
+ 312              		.cfi_offset 4, -8
+ 313              		.cfi_offset 14, -4
+ 314              	.LBB40:
+ 315              	.LBB31:
+ 316              	.LBB29:
+  44:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #else
+ 317              		.loc 3 44 5 view .LVU76
+ 318 0002 DFED1C7A 		vldr.32	s15, .L19
+ 319              	.LBE29:
+ 320              	.LBE31:
+ 321              	.LBE40:
+  25:Basic_Overdrive.cpp ****     pre_gain_              = pre_gain_a + (pre_gain_b - pre_gain_a) * drive_2;
+ 322              		.loc 2 25 17 view .LVU77
+ 323 0006 B3EE086A 		vmov.f32	s12, #2.4e+1
+ 324              	.LBB41:
+ 325              	.LBB32:
+ 326              	.LBB30:
+  44:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #else
+ARM GAS  /tmp/cceI8Dqj.s 			page 13
 
 
- 283              		.loc 1 18 1 is_stmt 0 view .LVU73
- 284 0000 10B5     		push	{r4, lr}
- 285              		.cfi_def_cfa_offset 8
- 286              		.cfi_offset 4, -8
- 287              		.cfi_offset 14, -4
- 288              	.LBB40:
- 289              	.LBB31:
- 290              	.LBB29:
-  44:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #else
- 291              		.loc 2 44 5 view .LVU74
- 292 0002 DFED1C7A 		vldr.32	s15, .L19
- 293              	.LBE29:
- 294              	.LBE31:
- 295              	.LBE40:
-  24:Basic_Overdrive.cpp ****     pre_gain_              = pre_gain_a + (pre_gain_b - pre_gain_a) * drive_2;
- 296              		.loc 1 24 17 view .LVU75
- 297 0006 B3EE086A 		vmov.f32	s12, #2.4e+1
- 298              	.LBB41:
- 299              	.LBB32:
- 300              	.LBB30:
-  44:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #else
- 301              		.loc 2 44 5 view .LVU76
- 302              		.syntax unified
- 303              	@ 44 "/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h" 1
- 304 000a C0FE277A 		vmaxnm.f32 s15, s0, s15
- 305              	@ 0 "" 2
- 306              	.LVL18:
+ 327              		.loc 3 44 5 view .LVU78
+ 328              		.syntax unified
+ 329              	@ 44 "/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h" 1
+ 330 000a C0FE277A 		vmaxnm.f32 s15, s0, s15
+ 331              	@ 0 "" 2
+ 332              	.LVL24:
   48:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 307              		.loc 2 48 5 is_stmt 1 view .LVU77
+ 333              		.loc 3 48 5 is_stmt 1 view .LVU79
   48:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 308              		.loc 2 48 5 is_stmt 0 view .LVU78
- 309              		.thumb
- 310              		.syntax unified
- 311              	.LBE30:
- 312              	.LBE32:
- 313              	.LBB33:
- 314              	.LBI33:
+ 334              		.loc 3 48 5 is_stmt 0 view .LVU80
+ 335              		.thumb
+ 336              		.syntax unified
+ 337              	.LBE30:
+ 338              	.LBE32:
+ 339              	.LBB33:
+ 340              	.LBI33:
   51:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** {
- 315              		.loc 2 51 14 is_stmt 1 view .LVU79
- 316              	.LBB34:
+ 341              		.loc 3 51 14 is_stmt 1 view .LVU81
+ 342              	.LBB34:
   53:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #ifdef __arm__
- 317              		.loc 2 53 5 view .LVU80
+ 343              		.loc 3 53 5 view .LVU82
   55:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #else
- 318              		.loc 2 55 5 view .LVU81
- 319              	.LBE34:
- 320              	.LBE33:
- 321              	.LBE41:
-  18:Basic_Overdrive.cpp ****     drive  = daisysp::fclamp(drive, 0.f, 1.f);
- 322              		.loc 1 18 1 is_stmt 0 view .LVU82
- 323 000e 2DED028B 		vpush.64	{d8}
- 324              		.cfi_def_cfa_offset 16
- 325              		.cfi_offset 80, -16
- 326              		.cfi_offset 81, -12
- 327              	.LBB42:
- 328              	.LBB37:
- 329              	.LBB35:
+ 344              		.loc 3 55 5 view .LVU83
+ 345              	.LBE34:
+ 346              	.LBE33:
+ 347              	.LBE41:
+  19:Basic_Overdrive.cpp ****     drive  = daisysp::fclamp(drive, 0.f, 1.f);
+ 348              		.loc 2 19 1 is_stmt 0 view .LVU84
+ 349 000e 2DED028B 		vpush.64	{d8}
+ 350              		.cfi_def_cfa_offset 16
+ 351              		.cfi_offset 80, -16
+ 352              		.cfi_offset 81, -12
+ 353              	.LBB42:
+ 354              	.LBB37:
+ 355              	.LBB35:
   55:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #else
-ARM GAS  /tmp/cc4HmTtm.s 			page 13
-
-
- 330              		.loc 2 55 5 view .LVU83
- 331 0012 B7EE008A 		vmov.f32	s16, #1.0e+0
- 332              	.LBE35:
- 333              	.LBE37:
- 334              	.LBE42:
-  28:Basic_Overdrive.cpp **** }
- 335              		.loc 1 28 79 view .LVU84
- 336 0016 9FED180A 		vldr.32	s0, .L19+4
- 337              	.LVL19:
- 338              	.LBB43:
- 339              	.LBB38:
- 340              	.LBB36:
+ 356              		.loc 3 55 5 view .LVU85
+ 357 0012 B7EE008A 		vmov.f32	s16, #1.0e+0
+ 358              	.LBE35:
+ 359              	.LBE37:
+ 360              	.LBE42:
+  29:Basic_Overdrive.cpp **** }
+ 361              		.loc 2 29 79 view .LVU86
+ 362 0016 9FED180A 		vldr.32	s0, .L19+4
+ 363              	.LVL25:
+ 364              	.LBB43:
+ 365              	.LBB38:
+ 366              	.LBB36:
   55:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** #else
- 341              		.loc 2 55 5 view .LVU85
- 342              		.syntax unified
- 343              	@ 55 "/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h" 1
- 344 001a C7FEC87A 		vminnm.f32 s15, s15, s16
- 345              	@ 0 "" 2
- 346              	.LVL20:
+ 367              		.loc 3 55 5 view .LVU87
+ 368              		.syntax unified
+ 369              	@ 55 "/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h" 1
+ 370 001a C7FEC87A 		vminnm.f32 s15, s15, s16
+ 371              	@ 0 "" 2
+ 372              	.LVL26:
   59:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 347              		.loc 2 59 5 is_stmt 1 view .LVU86
+ 373              		.loc 3 59 5 is_stmt 1 view .LVU88
+ARM GAS  /tmp/cceI8Dqj.s 			page 14
+
+
   59:/home/luca/Desktop/DaisyExamples/DaisySP//Source/Utility/dsp.h **** }
- 348              		.loc 2 59 5 is_stmt 0 view .LVU87
- 349              		.thumb
- 350              		.syntax unified
- 351              	.LBE36:
- 352              	.LBE38:
- 353              	.LBE43:
-  20:Basic_Overdrive.cpp **** 
- 354              		.loc 1 20 5 is_stmt 1 view .LVU88
-  20:Basic_Overdrive.cpp **** 
- 355              		.loc 1 20 18 is_stmt 0 view .LVU89
- 356 001e 77EEA77A 		vadd.f32	s15, s15, s15
- 357              	.LVL21:
-  18:Basic_Overdrive.cpp ****     drive  = daisysp::fclamp(drive, 0.f, 1.f);
- 358              		.loc 1 18 1 view .LVU90
- 359 0022 0446     		mov	r4, r0
-  22:Basic_Overdrive.cpp ****     const float pre_gain_a = drive_ * 0.5f;
- 360              		.loc 1 22 17 view .LVU91
- 361 0024 67EEA76A 		vmul.f32	s13, s15, s15
-  20:Basic_Overdrive.cpp **** 
- 362              		.loc 1 20 12 view .LVU92
- 363 0028 C0ED107A 		vstr.32	s15, [r0, #64]
-  22:Basic_Overdrive.cpp ****     const float pre_gain_a = drive_ * 0.5f;
- 364              		.loc 1 22 5 is_stmt 1 view .LVU93
- 365              	.LVL22:
-  23:Basic_Overdrive.cpp ****     const float pre_gain_b = drive_2 * drive_2 * drive_ * 24.0f;
- 366              		.loc 1 23 5 view .LVU94
-  24:Basic_Overdrive.cpp ****     pre_gain_              = pre_gain_a + (pre_gain_b - pre_gain_a) * drive_2;
- 367              		.loc 1 24 5 view .LVU95
-  25:Basic_Overdrive.cpp **** 
- 368              		.loc 1 25 5 view .LVU96
-  24:Basic_Overdrive.cpp ****     pre_gain_              = pre_gain_a + (pre_gain_b - pre_gain_a) * drive_2;
- 369              		.loc 1 24 38 is_stmt 0 view .LVU97
- 370 002c 26EEA67A 		vmul.f32	s14, s13, s13
-  24:Basic_Overdrive.cpp ****     pre_gain_              = pre_gain_a + (pre_gain_b - pre_gain_a) * drive_2;
- 371              		.loc 1 24 48 view .LVU98
-ARM GAS  /tmp/cc4HmTtm.s 			page 14
+ 374              		.loc 3 59 5 is_stmt 0 view .LVU89
+ 375              		.thumb
+ 376              		.syntax unified
+ 377              	.LBE36:
+ 378              	.LBE38:
+ 379              	.LBE43:
+  21:Basic_Overdrive.cpp **** 
+ 380              		.loc 2 21 5 is_stmt 1 view .LVU90
+  21:Basic_Overdrive.cpp **** 
+ 381              		.loc 2 21 18 is_stmt 0 view .LVU91
+ 382 001e 77EEA77A 		vadd.f32	s15, s15, s15
+ 383              	.LVL27:
+  19:Basic_Overdrive.cpp ****     drive  = daisysp::fclamp(drive, 0.f, 1.f);
+ 384              		.loc 2 19 1 view .LVU92
+ 385 0022 0446     		mov	r4, r0
+  23:Basic_Overdrive.cpp ****     const float pre_gain_a = drive_ * 0.5f;
+ 386              		.loc 2 23 17 view .LVU93
+ 387 0024 67EEA76A 		vmul.f32	s13, s15, s15
+  21:Basic_Overdrive.cpp **** 
+ 388              		.loc 2 21 12 view .LVU94
+ 389 0028 C0ED107A 		vstr.32	s15, [r0, #64]
+  23:Basic_Overdrive.cpp ****     const float pre_gain_a = drive_ * 0.5f;
+ 390              		.loc 2 23 5 is_stmt 1 view .LVU95
+ 391              	.LVL28:
+  24:Basic_Overdrive.cpp ****     const float pre_gain_b = drive_2 * drive_2 * drive_ * 24.0f;
+ 392              		.loc 2 24 5 view .LVU96
+  25:Basic_Overdrive.cpp ****     pre_gain_              = pre_gain_a + (pre_gain_b - pre_gain_a) * drive_2;
+ 393              		.loc 2 25 5 view .LVU97
+  26:Basic_Overdrive.cpp **** 
+ 394              		.loc 2 26 5 view .LVU98
+  25:Basic_Overdrive.cpp ****     pre_gain_              = pre_gain_a + (pre_gain_b - pre_gain_a) * drive_2;
+ 395              		.loc 2 25 38 is_stmt 0 view .LVU99
+ 396 002c 26EEA67A 		vmul.f32	s14, s13, s13
+  25:Basic_Overdrive.cpp ****     pre_gain_              = pre_gain_a + (pre_gain_b - pre_gain_a) * drive_2;
+ 397              		.loc 2 25 48 view .LVU100
+ 398 0030 27EE277A 		vmul.f32	s14, s14, s15
+  25:Basic_Overdrive.cpp ****     pre_gain_              = pre_gain_a + (pre_gain_b - pre_gain_a) * drive_2;
+ 399              		.loc 2 25 17 view .LVU101
+ 400 0034 27EE067A 		vmul.f32	s14, s14, s12
+ 401              	.LVL29:
+  26:Basic_Overdrive.cpp **** 
+ 402              		.loc 2 26 55 view .LVU102
+ 403 0038 B6EE006A 		vmov.f32	s12, #5.0e-1
+ 404 003c A7EEC67A 		vfms.f32	s14, s15, s12
+ 405              	.LVL30:
+  26:Basic_Overdrive.cpp **** 
+ 406              		.loc 2 26 69 view .LVU103
+ 407 0040 27EE267A 		vmul.f32	s14, s14, s13
+  28:Basic_Overdrive.cpp ****     post_gain_ = 1.0f / daisysp::SoftClip(0.33f + drive_squashed * (pre_gain_ - 0.33f));
+ 408              		.loc 2 28 49 view .LVU104
+ 409 0044 F0EE006A 		vmov.f32	s13, #2.0e+0
+ 410              	.LVL31:
+  26:Basic_Overdrive.cpp **** 
+ 411              		.loc 2 26 41 view .LVU105
+ 412 0048 A7EE867A 		vfma.f32	s14, s15, s12
+  28:Basic_Overdrive.cpp ****     post_gain_ = 1.0f / daisysp::SoftClip(0.33f + drive_squashed * (pre_gain_ - 0.33f));
+ARM GAS  /tmp/cceI8Dqj.s 			page 15
 
 
- 372 0030 27EE277A 		vmul.f32	s14, s14, s15
-  24:Basic_Overdrive.cpp ****     pre_gain_              = pre_gain_a + (pre_gain_b - pre_gain_a) * drive_2;
- 373              		.loc 1 24 17 view .LVU99
- 374 0034 27EE067A 		vmul.f32	s14, s14, s12
- 375              	.LVL23:
-  25:Basic_Overdrive.cpp **** 
- 376              		.loc 1 25 55 view .LVU100
- 377 0038 B6EE006A 		vmov.f32	s12, #5.0e-1
- 378 003c A7EEC67A 		vfms.f32	s14, s15, s12
- 379              	.LVL24:
-  25:Basic_Overdrive.cpp **** 
- 380              		.loc 1 25 69 view .LVU101
- 381 0040 27EE267A 		vmul.f32	s14, s14, s13
-  27:Basic_Overdrive.cpp ****     post_gain_ = 1.0f / daisysp::SoftClip(0.33f + drive_squashed * (pre_gain_ - 0.33f));
- 382              		.loc 1 27 49 view .LVU102
- 383 0044 F0EE006A 		vmov.f32	s13, #2.0e+0
- 384              	.LVL25:
-  25:Basic_Overdrive.cpp **** 
- 385              		.loc 1 25 41 view .LVU103
- 386 0048 A7EE867A 		vfma.f32	s14, s15, s12
-  27:Basic_Overdrive.cpp ****     post_gain_ = 1.0f / daisysp::SoftClip(0.33f + drive_squashed * (pre_gain_ - 0.33f));
- 387              		.loc 1 27 49 view .LVU104
- 388 004c 76EEE76A 		vsub.f32	s13, s13, s15
-  27:Basic_Overdrive.cpp ****     post_gain_ = 1.0f / daisysp::SoftClip(0.33f + drive_squashed * (pre_gain_ - 0.33f));
- 389              		.loc 1 27 17 view .LVU105
- 390 0050 66EEA77A 		vmul.f32	s15, s13, s15
- 391              	.LVL26:
-  25:Basic_Overdrive.cpp **** 
- 392              		.loc 1 25 28 view .LVU106
- 393 0054 80ED117A 		vstr.32	s14, [r0, #68]
-  27:Basic_Overdrive.cpp ****     post_gain_ = 1.0f / daisysp::SoftClip(0.33f + drive_squashed * (pre_gain_ - 0.33f));
- 394              		.loc 1 27 5 is_stmt 1 view .LVU107
-  28:Basic_Overdrive.cpp **** }
- 395              		.loc 1 28 5 view .LVU108
-  28:Basic_Overdrive.cpp **** }
- 396              		.loc 1 28 79 is_stmt 0 view .LVU109
- 397 0058 37EE407A 		vsub.f32	s14, s14, s0
-  28:Basic_Overdrive.cpp **** }
- 398              		.loc 1 28 42 view .LVU110
- 399 005c A7EE270A 		vfma.f32	s0, s14, s15
- 400 0060 FFF7FEFF 		bl	_ZN7daisysp8SoftClipEf
- 401              	.LVL27:
-  28:Basic_Overdrive.cpp **** }
- 402              		.loc 1 28 23 view .LVU111
- 403 0064 C8EE007A 		vdiv.f32	s15, s16, s0
-  29:Basic_Overdrive.cpp **** 
- 404              		.loc 1 29 1 view .LVU112
- 405 0068 BDEC028B 		vldm	sp!, {d8}
- 406              		.cfi_restore 80
- 407              		.cfi_restore 81
- 408              		.cfi_def_cfa_offset 8
-  28:Basic_Overdrive.cpp **** }
- 409              		.loc 1 28 16 view .LVU113
- 410 006c C4ED127A 		vstr.32	s15, [r4, #72]
-  29:Basic_Overdrive.cpp **** 
- 411              		.loc 1 29 1 view .LVU114
- 412 0070 10BD     		pop	{r4, pc}
-ARM GAS  /tmp/cc4HmTtm.s 			page 15
-
-
- 413              	.LVL28:
- 414              	.L20:
-  29:Basic_Overdrive.cpp **** 
- 415              		.loc 1 29 1 view .LVU115
- 416 0072 00BF     		.align	2
- 417              	.L19:
- 418 0074 00000000 		.word	0
- 419 0078 C3F5A83E 		.word	1051260355
- 420              		.cfi_endproc
- 421              	.LFE3529:
- 423              		.section	.text._ZN15Basic_Overdrive4InitEf,"ax",%progbits
- 424              		.align	1
- 425              		.global	_ZN15Basic_Overdrive4InitEf
- 426              		.syntax unified
- 427              		.thumb
- 428              		.thumb_func
- 429              		.fpu fpv5-d16
- 431              	_ZN15Basic_Overdrive4InitEf:
- 432              	.LVL29:
- 433              	.LFB3527:
+ 413              		.loc 2 28 49 view .LVU106
+ 414 004c 76EEE76A 		vsub.f32	s13, s13, s15
+  28:Basic_Overdrive.cpp ****     post_gain_ = 1.0f / daisysp::SoftClip(0.33f + drive_squashed * (pre_gain_ - 0.33f));
+ 415              		.loc 2 28 17 view .LVU107
+ 416 0050 66EEA77A 		vmul.f32	s15, s13, s15
+ 417              	.LVL32:
+  26:Basic_Overdrive.cpp **** 
+ 418              		.loc 2 26 28 view .LVU108
+ 419 0054 80ED117A 		vstr.32	s14, [r0, #68]
+  28:Basic_Overdrive.cpp ****     post_gain_ = 1.0f / daisysp::SoftClip(0.33f + drive_squashed * (pre_gain_ - 0.33f));
+ 420              		.loc 2 28 5 is_stmt 1 view .LVU109
+  29:Basic_Overdrive.cpp **** }
+ 421              		.loc 2 29 5 view .LVU110
+  29:Basic_Overdrive.cpp **** }
+ 422              		.loc 2 29 79 is_stmt 0 view .LVU111
+ 423 0058 37EE407A 		vsub.f32	s14, s14, s0
+  29:Basic_Overdrive.cpp **** }
+ 424              		.loc 2 29 42 view .LVU112
+ 425 005c A7EE270A 		vfma.f32	s0, s14, s15
+ 426 0060 FFF7FEFF 		bl	_ZN7daisysp8SoftClipEf
+ 427              	.LVL33:
+  29:Basic_Overdrive.cpp **** }
+ 428              		.loc 2 29 23 view .LVU113
+ 429 0064 C8EE007A 		vdiv.f32	s15, s16, s0
+  30:Basic_Overdrive.cpp **** 
+ 430              		.loc 2 30 1 view .LVU114
+ 431 0068 BDEC028B 		vldm	sp!, {d8}
+ 432              		.cfi_restore 80
+ 433              		.cfi_restore 81
+ 434              		.cfi_def_cfa_offset 8
+  29:Basic_Overdrive.cpp **** }
+ 435              		.loc 2 29 16 view .LVU115
+ 436 006c C4ED127A 		vstr.32	s15, [r4, #72]
+  30:Basic_Overdrive.cpp **** 
+ 437              		.loc 2 30 1 view .LVU116
+ 438 0070 10BD     		pop	{r4, pc}
+ 439              	.LVL34:
+ 440              	.L20:
+  30:Basic_Overdrive.cpp **** 
+ 441              		.loc 2 30 1 view .LVU117
+ 442 0072 00BF     		.align	2
+ 443              	.L19:
+ 444 0074 00000000 		.word	0
+ 445 0078 C3F5A83E 		.word	1051260355
+ 446              		.cfi_endproc
+ 447              	.LFE3530:
+ 449              		.section	.text._ZN15Basic_Overdrive4InitEf,"ax",%progbits
+ 450              		.align	1
+ 451              		.global	_ZN15Basic_Overdrive4InitEf
+ 452              		.syntax unified
+ 453              		.thumb
+ 454              		.thumb_func
+ 455              		.fpu fpv5-d16
+ 457              	_ZN15Basic_Overdrive4InitEf:
+ 458              	.LVL35:
+ 459              	.LFB3528:
    6:Basic_Overdrive.cpp ****     m_sample_rate = sample_rate;
- 434              		.loc 1 6 1 is_stmt 1 view -0
- 435              		.cfi_startproc
- 436              		@ args = 0, pretend = 0, frame = 0
- 437              		@ frame_needed = 0, uses_anonymous_args = 0
- 438              		@ link register save eliminated.
+ARM GAS  /tmp/cceI8Dqj.s 			page 16
+
+
+ 460              		.loc 2 6 1 is_stmt 1 view -0
+ 461              		.cfi_startproc
+ 462              		@ args = 0, pretend = 0, frame = 0
+ 463              		@ frame_needed = 0, uses_anonymous_args = 0
    7:Basic_Overdrive.cpp ****     SetDrive(.5f);
- 439              		.loc 1 7 5 view .LVU117
+ 464              		.loc 2 7 5 view .LVU119
+   6:Basic_Overdrive.cpp ****     m_sample_rate = sample_rate;
+ 465              		.loc 2 6 1 is_stmt 0 view .LVU120
+ 466 0000 10B5     		push	{r4, lr}
+ 467              		.cfi_def_cfa_offset 8
+ 468              		.cfi_offset 4, -8
+ 469              		.cfi_offset 14, -4
+   6:Basic_Overdrive.cpp ****     m_sample_rate = sample_rate;
+ 470              		.loc 2 6 1 view .LVU121
+ 471 0002 0446     		mov	r4, r0
    7:Basic_Overdrive.cpp ****     SetDrive(.5f);
- 440              		.loc 1 7 19 is_stmt 0 view .LVU118
- 441 0000 80ED070A 		vstr.32	s0, [r0, #28]
-   8:Basic_Overdrive.cpp **** }
- 442              		.loc 1 8 5 is_stmt 1 view .LVU119
-   8:Basic_Overdrive.cpp **** }
- 443              		.loc 1 8 13 is_stmt 0 view .LVU120
- 444 0004 B6EE000A 		vmov.f32	s0, #5.0e-1
- 445              	.LVL30:
-   8:Basic_Overdrive.cpp **** }
- 446              		.loc 1 8 13 view .LVU121
- 447 0008 FFF7FEBF 		b	_ZN15Basic_Overdrive8SetDriveEf
- 448              	.LVL31:
-   8:Basic_Overdrive.cpp **** }
- 449              		.loc 1 8 13 view .LVU122
- 450              		.cfi_endproc
- 451              	.LFE3527:
- 453              		.section	.text._ZN15Basic_Overdrive8SetParamEf,"ax",%progbits
- 454              		.align	1
- 455              		.global	_ZN15Basic_Overdrive8SetParamEf
- 456              		.syntax unified
- 457              		.thumb
- 458              		.thumb_func
- 459              		.fpu fpv5-d16
- 461              	_ZN15Basic_Overdrive8SetParamEf:
- 462              	.LVL32:
- 463              	.LFB3531:
-  45:Basic_Overdrive.cpp ****     }
-  46:Basic_Overdrive.cpp **** }
-ARM GAS  /tmp/cc4HmTtm.s 			page 16
+ 472              		.loc 2 7 19 view .LVU122
+ 473 0004 80ED070A 		vstr.32	s0, [r0, #28]
+   8:Basic_Overdrive.cpp ****     CycleParam(0);
+ 474              		.loc 2 8 5 is_stmt 1 view .LVU123
+   8:Basic_Overdrive.cpp ****     CycleParam(0);
+ 475              		.loc 2 8 13 is_stmt 0 view .LVU124
+ 476 0008 B6EE000A 		vmov.f32	s0, #5.0e-1
+ 477              	.LVL36:
+   8:Basic_Overdrive.cpp ****     CycleParam(0);
+ 478              		.loc 2 8 13 view .LVU125
+ 479 000c FFF7FEFF 		bl	_ZN15Basic_Overdrive8SetDriveEf
+ 480              	.LVL37:
+   9:Basic_Overdrive.cpp **** }
+ 481              		.loc 2 9 5 is_stmt 1 view .LVU126
+   9:Basic_Overdrive.cpp **** }
+ 482              		.loc 2 9 17 is_stmt 0 view .LVU127
+ 483 0010 2368     		ldr	r3, [r4]
+   9:Basic_Overdrive.cpp **** }
+ 484              		.loc 2 9 15 view .LVU128
+ 485 0012 2046     		mov	r0, r4
+ 486 0014 0021     		movs	r1, #0
+ 487 0016 DB68     		ldr	r3, [r3, #12]
+  10:Basic_Overdrive.cpp **** 
+ 488              		.loc 2 10 1 view .LVU129
+ 489 0018 BDE81040 		pop	{r4, lr}
+ 490              		.cfi_restore 14
+ 491              		.cfi_restore 4
+ 492              		.cfi_def_cfa_offset 0
+ 493              	.LVL38:
+   9:Basic_Overdrive.cpp **** }
+ 494              		.loc 2 9 15 view .LVU130
+ 495 001c 1847     		bx	r3	@ indirect register sibling call
+ 496              	.LVL39:
+   9:Basic_Overdrive.cpp **** }
+ 497              		.loc 2 9 15 view .LVU131
+ 498              		.cfi_endproc
+ 499              	.LFE3528:
+ 501              		.section	.text._ZN15Basic_Overdrive8SetParamEf,"ax",%progbits
+ 502              		.align	1
+ 503              		.global	_ZN15Basic_Overdrive8SetParamEf
+ 504              		.syntax unified
+ARM GAS  /tmp/cceI8Dqj.s 			page 17
 
 
-  47:Basic_Overdrive.cpp **** 
-  48:Basic_Overdrive.cpp **** float Basic_Overdrive::SetParam(float val)
-  49:Basic_Overdrive.cpp **** {
- 464              		.loc 1 49 1 is_stmt 1 view -0
- 465              		.cfi_startproc
- 466              		@ args = 0, pretend = 0, frame = 0
- 467              		@ frame_needed = 0, uses_anonymous_args = 0
-  50:Basic_Overdrive.cpp ****     switch (m_current_param)
- 468              		.loc 1 50 5 view .LVU124
- 469              		.loc 1 50 13 is_stmt 0 view .LVU125
- 470 0000 426A     		ldr	r2, [r0, #36]
+ 505              		.thumb
+ 506              		.thumb_func
+ 507              		.fpu fpv5-d16
+ 509              	_ZN15Basic_Overdrive8SetParamEf:
+ 510              	.LVL40:
+ 511              	.LFB3532:
+  44:Basic_Overdrive.cpp ****     }
+  45:Basic_Overdrive.cpp **** }
+  46:Basic_Overdrive.cpp **** 
+  47:Basic_Overdrive.cpp **** float Basic_Overdrive::SetParam(float val)
+  48:Basic_Overdrive.cpp **** {
+ 512              		.loc 2 48 1 is_stmt 1 view -0
+ 513              		.cfi_startproc
+ 514              		@ args = 0, pretend = 0, frame = 0
+ 515              		@ frame_needed = 0, uses_anonymous_args = 0
   49:Basic_Overdrive.cpp ****     switch (m_current_param)
- 471              		.loc 1 49 1 view .LVU126
- 472 0002 08B5     		push	{r3, lr}
- 473              		.cfi_def_cfa_offset 8
- 474              		.cfi_offset 3, -8
- 475              		.cfi_offset 14, -4
- 476 0004 2DED028B 		vpush.64	{d8}
- 477              		.cfi_def_cfa_offset 16
- 478              		.cfi_offset 80, -16
- 479              		.cfi_offset 81, -12
-  49:Basic_Overdrive.cpp ****     switch (m_current_param)
- 480              		.loc 1 49 1 view .LVU127
- 481 0008 B0EE408A 		vmov.f32	s16, s0
- 482              		.loc 1 50 5 view .LVU128
- 483 000c 42B1     		cbz	r2, .L23
- 484 000e 012A     		cmp	r2, #1
- 485 0010 09D0     		beq	.L24
- 486 0012 BFEE008A 		vmov.f32	s16, #-1.0e+0
- 487              	.LVL33:
- 488              	.L25:
-  51:Basic_Overdrive.cpp ****     {
-  52:Basic_Overdrive.cpp ****         case 0:
-  53:Basic_Overdrive.cpp ****             m_mix = val;
-  54:Basic_Overdrive.cpp ****             return val;
-  55:Basic_Overdrive.cpp ****         case 1:
-  56:Basic_Overdrive.cpp ****             SetDrive(val);
-  57:Basic_Overdrive.cpp ****             return val;
-  58:Basic_Overdrive.cpp ****         // return negative if error occurs and no valid param is selected
-  59:Basic_Overdrive.cpp ****         default:
-  60:Basic_Overdrive.cpp ****             return -1.0f;
-  61:Basic_Overdrive.cpp ****     }
-  62:Basic_Overdrive.cpp **** }...
- 489              		.loc 1 62 1 view .LVU129
- 490 0016 B0EE480A 		vmov.f32	s0, s16
- 491 001a BDEC028B 		vldm	sp!, {d8}
- 492              		.cfi_remember_state
- 493              		.cfi_restore 80
- 494              		.cfi_restore 81
- 495              		.cfi_def_cfa_offset 8
- 496 001e 08BD     		pop	{r3, pc}
- 497              	.LVL34:
- 498              	.L23:
- 499              		.cfi_restore_state
-  52:Basic_Overdrive.cpp ****         case 0:
- 500              		.loc 1 52 9 is_stmt 1 view .LVU130
-  53:Basic_Overdrive.cpp ****             m_mix = val;
-ARM GAS  /tmp/cc4HmTtm.s 			page 17
+ 516              		.loc 2 49 5 view .LVU133
+ 517              		.loc 2 49 13 is_stmt 0 view .LVU134
+ 518 0000 426A     		ldr	r2, [r0, #36]
+  48:Basic_Overdrive.cpp ****     switch (m_current_param)
+ 519              		.loc 2 48 1 view .LVU135
+ 520 0002 08B5     		push	{r3, lr}
+ 521              		.cfi_def_cfa_offset 8
+ 522              		.cfi_offset 3, -8
+ 523              		.cfi_offset 14, -4
+ 524 0004 2DED028B 		vpush.64	{d8}
+ 525              		.cfi_def_cfa_offset 16
+ 526              		.cfi_offset 80, -16
+ 527              		.cfi_offset 81, -12
+  48:Basic_Overdrive.cpp ****     switch (m_current_param)
+ 528              		.loc 2 48 1 view .LVU136
+ 529 0008 B0EE408A 		vmov.f32	s16, s0
+ 530              		.loc 2 49 5 view .LVU137
+ 531 000c 42B1     		cbz	r2, .L23
+ 532 000e 012A     		cmp	r2, #1
+ 533 0010 09D0     		beq	.L24
+ 534 0012 BFEE008A 		vmov.f32	s16, #-1.0e+0
+ 535              	.LVL41:
+ 536              	.L25:
+  50:Basic_Overdrive.cpp ****     {
+  51:Basic_Overdrive.cpp ****         case 0:
+  52:Basic_Overdrive.cpp ****             m_mix = val;
+  53:Basic_Overdrive.cpp ****             return val;
+  54:Basic_Overdrive.cpp ****         case 1:
+  55:Basic_Overdrive.cpp ****             SetDrive(val);
+  56:Basic_Overdrive.cpp ****             return val;
+  57:Basic_Overdrive.cpp ****         // return negative if error occurs and no valid param is selected
+  58:Basic_Overdrive.cpp ****         default:
+  59:Basic_Overdrive.cpp ****             return -1.0f;
+  60:Basic_Overdrive.cpp ****     }
+  61:Basic_Overdrive.cpp **** }...
+ 537              		.loc 2 61 1 view .LVU138
+ 538 0016 B0EE480A 		vmov.f32	s0, s16
+ 539 001a BDEC028B 		vldm	sp!, {d8}
+ 540              		.cfi_remember_state
+ 541              		.cfi_restore 80
+ 542              		.cfi_restore 81
+ARM GAS  /tmp/cceI8Dqj.s 			page 18
 
 
- 501              		.loc 1 53 13 view .LVU131
-  53:Basic_Overdrive.cpp ****             m_mix = val;
- 502              		.loc 1 53 19 is_stmt 0 view .LVU132
- 503 0020 80ED130A 		vstr.32	s0, [r0, #76]
-  54:Basic_Overdrive.cpp ****             return val;
- 504              		.loc 1 54 13 is_stmt 1 view .LVU133
-  54:Basic_Overdrive.cpp ****             return val;
- 505              		.loc 1 54 20 is_stmt 0 view .LVU134
- 506 0024 F7E7     		b	.L25
- 507              	.L24:
-  55:Basic_Overdrive.cpp ****         case 1:
- 508              		.loc 1 55 9 is_stmt 1 view .LVU135
-  56:Basic_Overdrive.cpp ****             SetDrive(val);
- 509              		.loc 1 56 13 view .LVU136
-  56:Basic_Overdrive.cpp ****             SetDrive(val);
- 510              		.loc 1 56 21 is_stmt 0 view .LVU137
- 511 0026 FFF7FEFF 		bl	_ZN15Basic_Overdrive8SetDriveEf
- 512              	.LVL35:
-  57:Basic_Overdrive.cpp ****             return val;
- 513              		.loc 1 57 13 is_stmt 1 view .LVU138
-  57:Basic_Overdrive.cpp ****             return val;
- 514              		.loc 1 57 20 is_stmt 0 view .LVU139
- 515 002a F4E7     		b	.L25
- 516              		.cfi_endproc
- 517              	.LFE3531:
- 519              		.global	_ZTV15Basic_Overdrive
- 520              		.section	.rodata._ZTV15Basic_Overdrive,"a"
- 521              		.align	2
- 524              	_ZTV15Basic_Overdrive:
- 525 0000 00000000 		.word	0
- 526 0004 00000000 		.word	0
- 527 0008 00000000 		.word	_ZN15Basic_Overdrive4InitEf
- 528 000c 00000000 		.word	_ZN15Basic_Overdrive7ProcessEf
- 529 0010 00000000 		.word	_ZN15Basic_Overdrive10CycleParamEv
- 530 0014 00000000 		.word	_ZN15Basic_Overdrive8SetParamEf
- 531              		.text
- 532              	.Letext0:
- 533              		.file 3 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/ma
- 534              		.file 4 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/sy
- 535              		.file 5 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/st
- 536              		.file 6 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/lib/gcc/arm-none-eabi/10
- 537              		.file 7 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c+
- 538              		.file 8 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c+
- 539              		.file 9 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c+
- 540              		.file 10 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 541              		.file 11 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 542              		.file 12 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 543              		.file 13 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 544              		.file 14 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 545              		.file 15 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 546              		.file 16 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 547              		.file 17 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 548              		.file 18 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 549              		.file 19 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 550              		.file 20 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 551              		.file 21 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 552              		.file 22 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
-ARM GAS  /tmp/cc4HmTtm.s 			page 18
+ 543              		.cfi_def_cfa_offset 8
+ 544 001e 08BD     		pop	{r3, pc}
+ 545              	.LVL42:
+ 546              	.L23:
+ 547              		.cfi_restore_state
+  51:Basic_Overdrive.cpp ****         case 0:
+ 548              		.loc 2 51 9 is_stmt 1 view .LVU139
+  52:Basic_Overdrive.cpp ****             m_mix = val;
+ 549              		.loc 2 52 13 view .LVU140
+  52:Basic_Overdrive.cpp ****             m_mix = val;
+ 550              		.loc 2 52 19 is_stmt 0 view .LVU141
+ 551 0020 80ED130A 		vstr.32	s0, [r0, #76]
+  53:Basic_Overdrive.cpp ****             return val;
+ 552              		.loc 2 53 13 is_stmt 1 view .LVU142
+  53:Basic_Overdrive.cpp ****             return val;
+ 553              		.loc 2 53 20 is_stmt 0 view .LVU143
+ 554 0024 F7E7     		b	.L25
+ 555              	.L24:
+  54:Basic_Overdrive.cpp ****         case 1:
+ 556              		.loc 2 54 9 is_stmt 1 view .LVU144
+  55:Basic_Overdrive.cpp ****             SetDrive(val);
+ 557              		.loc 2 55 13 view .LVU145
+  55:Basic_Overdrive.cpp ****             SetDrive(val);
+ 558              		.loc 2 55 21 is_stmt 0 view .LVU146
+ 559 0026 FFF7FEFF 		bl	_ZN15Basic_Overdrive8SetDriveEf
+ 560              	.LVL43:
+  56:Basic_Overdrive.cpp ****             return val;
+ 561              		.loc 2 56 13 is_stmt 1 view .LVU147
+  56:Basic_Overdrive.cpp ****             return val;
+ 562              		.loc 2 56 20 is_stmt 0 view .LVU148
+ 563 002a F4E7     		b	.L25
+ 564              		.cfi_endproc
+ 565              	.LFE3532:
+ 567              		.global	_ZTV15Basic_Overdrive
+ 568              		.section	.rodata._ZTV15Basic_Overdrive,"a"
+ 569              		.align	2
+ 572              	_ZTV15Basic_Overdrive:
+ 573 0000 00000000 		.word	0
+ 574 0004 00000000 		.word	0
+ 575 0008 00000000 		.word	_ZN15Basic_Overdrive4InitEf
+ 576 000c 00000000 		.word	_ZN15Basic_Overdrive7ProcessEf
+ 577 0010 00000000 		.word	_ZN6Effect10CycleParamEv
+ 578 0014 00000000 		.word	_ZN15Basic_Overdrive10CycleParamEi
+ 579 0018 00000000 		.word	_ZN15Basic_Overdrive8SetParamEf
+ 580              		.text
+ 581              	.Letext0:
+ 582              		.file 4 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/ma
+ 583              		.file 5 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/sy
+ 584              		.file 6 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/st
+ 585              		.file 7 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/lib/gcc/arm-none-eabi/10
+ 586              		.file 8 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c+
+ 587              		.file 9 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c+
+ 588              		.file 10 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 589              		.file 11 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 590              		.file 12 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 591              		.file 13 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 592              		.file 14 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ARM GAS  /tmp/cceI8Dqj.s 			page 19
 
 
- 553              		.file 23 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 554              		.file 24 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 555              		.file 25 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 556              		.file 26 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 557              		.file 27 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 558              		.file 28 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 559              		.file 29 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 560              		.file 30 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 561              		.file 31 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 562              		.file 32 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 563              		.file 33 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/s
- 564              		.file 34 "<built-in>"
- 565              		.file 35 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/s
- 566              		.file 36 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/s
- 567              		.file 37 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/m
- 568              		.file 38 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/s
- 569              		.file 39 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 570              		.file 40 "/home/luca/Desktop/DaisyExamples/DaisySP//Source/Control/adenv.h"
- 571              		.file 41 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/lib/gcc/arm-none-eabi/1
- 572              		.file 42 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/w
- 573              		.file 43 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/l
- 574              		.file 44 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/s
- 575              		.file 45 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
- 576              		.file 46 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/s
- 577              		.file 47 "Basic_Overdrive.h"
- 578              		.file 48 "Effect.h"
-ARM GAS  /tmp/cc4HmTtm.s 			page 19
+ 593              		.file 15 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 594              		.file 16 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 595              		.file 17 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 596              		.file 18 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 597              		.file 19 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 598              		.file 20 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 599              		.file 21 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 600              		.file 22 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 601              		.file 23 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 602              		.file 24 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 603              		.file 25 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 604              		.file 26 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 605              		.file 27 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 606              		.file 28 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 607              		.file 29 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 608              		.file 30 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 609              		.file 31 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 610              		.file 32 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 611              		.file 33 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 612              		.file 34 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/s
+ 613              		.file 35 "<built-in>"
+ 614              		.file 36 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/s
+ 615              		.file 37 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/s
+ 616              		.file 38 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/m
+ 617              		.file 39 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/s
+ 618              		.file 40 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 619              		.file 41 "/home/luca/Desktop/DaisyExamples/DaisySP//Source/Control/adenv.h"
+ 620              		.file 42 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/lib/gcc/arm-none-eabi/1
+ 621              		.file 43 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/w
+ 622              		.file 44 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/l
+ 623              		.file 45 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/s
+ 624              		.file 46 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/c
+ 625              		.file 47 "/home/luca/DaisySeedDeveloper/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/include/s
+ 626              		.file 48 "Basic_Overdrive.h"
+ARM GAS  /tmp/cceI8Dqj.s 			page 20
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 Basic_Overdrive.cpp
-     /tmp/cc4HmTtm.s:24     .text._ZN15Basic_Overdrive10CycleParamEv:0000000000000000 $t
-     /tmp/cc4HmTtm.s:32     .text._ZN15Basic_Overdrive10CycleParamEv:0000000000000000 _ZN15Basic_Overdrive10CycleParamEv
-     /tmp/cc4HmTtm.s:95     .text._ZN15Basic_Overdrive10CycleParamEv:0000000000000034 $d
-     /tmp/cc4HmTtm.s:102    .text._ZN7daisysp8SoftClipEf:0000000000000000 $t
-     /tmp/cc4HmTtm.s:109    .text._ZN7daisysp8SoftClipEf:0000000000000000 _ZN7daisysp8SoftClipEf
-     /tmp/cc4HmTtm.s:188    .text._ZN15Basic_Overdrive7ProcessEf:0000000000000000 $t
-     /tmp/cc4HmTtm.s:195    .text._ZN15Basic_Overdrive7ProcessEf:0000000000000000 _ZN15Basic_Overdrive7ProcessEf
-     /tmp/cc4HmTtm.s:253    .text._ZN15Basic_Overdrive8SetDriveEf:0000000000000000 $t
-     /tmp/cc4HmTtm.s:260    .text._ZN15Basic_Overdrive8SetDriveEf:0000000000000000 _ZN15Basic_Overdrive8SetDriveEf
-     /tmp/cc4HmTtm.s:418    .text._ZN15Basic_Overdrive8SetDriveEf:0000000000000074 $d
-     /tmp/cc4HmTtm.s:424    .text._ZN15Basic_Overdrive4InitEf:0000000000000000 $t
-     /tmp/cc4HmTtm.s:431    .text._ZN15Basic_Overdrive4InitEf:0000000000000000 _ZN15Basic_Overdrive4InitEf
-     /tmp/cc4HmTtm.s:454    .text._ZN15Basic_Overdrive8SetParamEf:0000000000000000 $t
-     /tmp/cc4HmTtm.s:461    .text._ZN15Basic_Overdrive8SetParamEf:0000000000000000 _ZN15Basic_Overdrive8SetParamEf
-     /tmp/cc4HmTtm.s:524    .rodata._ZTV15Basic_Overdrive:0000000000000000 _ZTV15Basic_Overdrive
-     /tmp/cc4HmTtm.s:521    .rodata._ZTV15Basic_Overdrive:0000000000000000 $d
+     /tmp/cceI8Dqj.s:17     .text._ZN6Effect10CycleParamEv:0000000000000000 $t
+     /tmp/cceI8Dqj.s:25     .text._ZN6Effect10CycleParamEv:0000000000000000 _ZN6Effect10CycleParamEv
+     /tmp/cceI8Dqj.s:68     .text._ZN15Basic_Overdrive10CycleParamEi:0000000000000000 $t
+     /tmp/cceI8Dqj.s:75     .text._ZN15Basic_Overdrive10CycleParamEi:0000000000000000 _ZN15Basic_Overdrive10CycleParamEi
+     /tmp/cceI8Dqj.s:121    .text._ZN15Basic_Overdrive10CycleParamEi:0000000000000018 $d
+     /tmp/cceI8Dqj.s:128    .text._ZN7daisysp8SoftClipEf:0000000000000000 $t
+     /tmp/cceI8Dqj.s:135    .text._ZN7daisysp8SoftClipEf:0000000000000000 _ZN7daisysp8SoftClipEf
+     /tmp/cceI8Dqj.s:214    .text._ZN15Basic_Overdrive7ProcessEf:0000000000000000 $t
+     /tmp/cceI8Dqj.s:221    .text._ZN15Basic_Overdrive7ProcessEf:0000000000000000 _ZN15Basic_Overdrive7ProcessEf
+     /tmp/cceI8Dqj.s:279    .text._ZN15Basic_Overdrive8SetDriveEf:0000000000000000 $t
+     /tmp/cceI8Dqj.s:286    .text._ZN15Basic_Overdrive8SetDriveEf:0000000000000000 _ZN15Basic_Overdrive8SetDriveEf
+     /tmp/cceI8Dqj.s:444    .text._ZN15Basic_Overdrive8SetDriveEf:0000000000000074 $d
+     /tmp/cceI8Dqj.s:450    .text._ZN15Basic_Overdrive4InitEf:0000000000000000 $t
+     /tmp/cceI8Dqj.s:457    .text._ZN15Basic_Overdrive4InitEf:0000000000000000 _ZN15Basic_Overdrive4InitEf
+     /tmp/cceI8Dqj.s:502    .text._ZN15Basic_Overdrive8SetParamEf:0000000000000000 $t
+     /tmp/cceI8Dqj.s:509    .text._ZN15Basic_Overdrive8SetParamEf:0000000000000000 _ZN15Basic_Overdrive8SetParamEf
+     /tmp/cceI8Dqj.s:572    .rodata._ZTV15Basic_Overdrive:0000000000000000 _ZTV15Basic_Overdrive
+     /tmp/cceI8Dqj.s:569    .rodata._ZTV15Basic_Overdrive:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc

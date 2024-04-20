@@ -32,7 +32,7 @@ class Basic_Overdrive : public Effect
       */
     void SetDrive(float drive);
 
-    void CycleParam();
+    void CycleParam(int param);
 
     float SetParam(float val);
 
