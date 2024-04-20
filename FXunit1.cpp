@@ -71,6 +71,7 @@ int main(void)
 	hw.adc.Init(&adc_channel_config,1);
 	// start adc
 	hw.adc.Start();
+	float main_pot_val{hw.adc.GetFloat(0)};
 
 	// tracks current effect mode
 	int mode {0};
@@ -117,18 +118,20 @@ int main(void)
 		}
 		prev_button_state = button_state;
 
-		float param_value{};
+		/* read current adc mix pot value. If current value has large enough difference from previous value 
+		then store new value and change currently selected param */
+		if (std::abs(hw.adc.GetFloat(0) - main_pot_val) >= 0.005f)
+		{
+			main_pot_val = hw.adc.GetFloat(0);
+			// snap to 0
+			if (main_pot_val < 0.005f) {main_pot_val = 0.0f;}
+			// snap to 1
+			else if (main_pot_val > 0.995f) {main_pot_val = 1.0f;}
+			current_effect->SetParam(main_pot_val);
+		}
 
-		/* read current adc mix pot value */
-		const float main_pot_val {hw.adc.GetFloat(0)};
-		// snap to 0
-		if (main_pot_val < 0.005f ) {param_value = current_effect->SetParam(0.0f); }
-		// snap to 100
-		else if (main_pot_val > 0.995f ) {param_value = current_effect->SetParam(1.0f); }
-		// if difference bewteen current mix value and previous is large enough then change it
-		else {param_value = current_effect->SetParam(main_pot_val);}
 
-		hw.PrintLine("Mode:%s Param:%s Amt:%f" ,current_effect->GetEffectName().c_str(),current_effect->GetParamName().c_str(),param_value);
+		hw.PrintLine("Mode:%s Param:%s Amt:%f" ,current_effect->GetEffectName().c_str(),current_effect->GetParamName().c_str(),main_pot_val);
 
 		hw.DelayMs(1);
 	}
