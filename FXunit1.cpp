@@ -15,7 +15,7 @@ Basic_Overdrive overdrive{};
 Basic_Delay<SAMPLE_RATE> delay{};
 // Store effects for easy access
 constexpr int EFFECT_COUNT{3};
-Effect* effect_array[EFFECT_COUNT]{&bypass,&overdrive,&delay};
+Effect* effect_array[EFFECT_COUNT]{&bypass,&delay,&overdrive};
 Effect* current_effect{effect_array[0]};
 
 void AudioCallback(daisy::AudioHandle::InterleavingInputBuffer in, daisy::AudioHandle::InterleavingOutputBuffer out, size_t size)
@@ -37,13 +37,14 @@ int main(void)
 	hw.SetAudioSampleRate(daisy::SaiHandle::Config::SampleRate::SAI_48KHZ);
 	hw.StartAudio(AudioCallback);
 	hw.StartLog();
+	hw.PrintLine("Hardware Initialized");
 	const float hw_sample_rate {hw.AudioSampleRate()};
 	
 	// init effects
 	overdrive.Init(hw_sample_rate);
-	overdrive.SetDrive(0.5f);
 	bypass.Init(hw_sample_rate);
 	delay.Init(hw_sample_rate);
+	hw.PrintLine("Effects Initialized");
 
 	// init encoders for switching modes
 	daisy::GPIO encoder_out_a{};
@@ -59,6 +60,7 @@ int main(void)
 	adc_channel_config.InitSingle(daisy::seed::A0);	//> set pin to ADC
 	hw.adc.Init(&adc_channel_config,1);	//> give handle to adc_cahnnel_config array and length
 	hw.adc.Start(); //> start adc
+	hw.PrintLine("External Hardware Initialized");
 
 	///*** State Variables ***///
 	int mode {0};	//> tracks current effect mode
@@ -89,14 +91,13 @@ int main(void)
 		}
 		previous_a_state = curr_a_state;
 
-		// Handle button state
+		// Handles button state
 		bool button_state {!param_button.Read()};
 		if (button_state && !prev_button_state) {current_effect->CycleParam();}	//> if button went from unpressed to pressed
 		prev_button_state = button_state;
 
-		/* read current adc mix pot value. If current value has large enough difference from previous value 
-		then store new value and change currently selected param */
-		if (std::abs(hw.adc.GetFloat(0) - main_pot_val) >= 0.005f)
+		// Handles main potentiometer state
+		if (std::abs(hw.adc.GetFloat(0) - main_pot_val) >= 0.005f)	//> if difference between new and previous value is large enough then update
 		{
 			main_pot_val = hw.adc.GetFloat(0);
 			if (main_pot_val < 0.005f) {main_pot_val = 0.0f;} //< snap to 0
@@ -105,6 +106,6 @@ int main(void)
 		}
 
 		// Print to serial monitor
-		hw.PrintLine("Mode:%s Param:%s Amt:%f" ,current_effect->GetEffectName().c_str(),current_effect->GetParamName().c_str(),main_pot_val);
+		hw.PrintLine("Mode:%s Param:%s Amt:%f" ,current_effect->GetEffectName().c_str(),current_effect->GetCurrentParamName().c_str(), current_effect->GetCurrentParamValue());
 	}
 }

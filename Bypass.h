@@ -10,8 +10,4 @@ public:
     ~Bypass() {};
 
     float Process(float val) {return val;}
-
-    void CycleParam(int param) { return;}
-
-    float SetParam(float val) {return val;}
 };

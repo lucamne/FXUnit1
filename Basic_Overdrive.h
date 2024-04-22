@@ -16,7 +16,7 @@
 class Basic_Overdrive : public Effect
 {
   public:
-    Basic_Overdrive():Effect("Overdrive",2),m_mix{1.0f} {}
+    Basic_Overdrive();
     ~Basic_Overdrive() {}
 
     /** Initializes the module with 0 gain */
@@ -27,19 +27,15 @@ class Basic_Overdrive : public Effect
     */
     float Process(float in);
 
-    /** Set the amount of drive
-          \param drive Works from 0-1
-      */
-    void SetDrive(float drive);
-
-    void CycleParam(int param);
-
-    float SetParam(float val);
+    void SetParam(float val);
 
   private:
     float drive_;
     float pre_gain_;
     float post_gain_;
 
-    float m_mix{};
+    /** Set the amount of drive
+      \param drive Works from 0-1
+    */
+    void SetDrive(float drive);
 };

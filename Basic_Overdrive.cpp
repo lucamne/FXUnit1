@@ -2,17 +2,24 @@
 #include "Basic_Overdrive.h"
 #include <algorithm>
 
+Basic_Overdrive::Basic_Overdrive()
+:Effect("Overdrive",2)
+{
+    m_param_array[0] = Parameter{"Mix",0.5f};
+    m_param_array[1] = Parameter{"Drive",0.5f};
+}
+
 void Basic_Overdrive::Init(float sample_rate)
 {
     m_sample_rate = sample_rate;
-    SetDrive(.5f);
-    CycleParam(0);
+    SetDrive(m_param_array[1].value);
 }
 
 float Basic_Overdrive::Process(float in)
 {
     float pre = pre_gain_ * in;
-    return (daisysp::SoftClip(pre) * post_gain_)*m_mix + in*(1-m_mix);
+    const float mix{m_param_array[0].value};
+    return (daisysp::SoftClip(pre) * post_gain_)*mix + in*(1-mix);
 }
 
 void Basic_Overdrive::SetDrive(float drive)
@@ -29,33 +36,8 @@ void Basic_Overdrive::SetDrive(float drive)
     post_gain_ = 1.0f / daisysp::SoftClip(0.33f + drive_squashed * (pre_gain_ - 0.33f));
 }
 
-void Basic_Overdrive::CycleParam(int param) 
+void Basic_Overdrive::SetParam(float val)
 {
-    switch (param)
-    {
-        case 0:
-            m_current_param_name = "Mix";
-            break;
-        case 1:
-            m_current_param_name = "Drive";
-            break;
-        default:
-            m_current_param_name = "?";
-    }
-}
-
-float Basic_Overdrive::SetParam(float val)
-{
-    switch (m_current_param)
-    {
-        case 0:
-            m_mix = val;
-            return val;
-        case 1:
-            SetDrive(val);
-            return val;
-        // return negative if error occurs and no valid param is selected
-        default:
-            return -1.0f;
-    }
+    m_param_array[m_current_param].value = val;
+    if (m_current_param == 1) {SetDrive(val);}
 }
