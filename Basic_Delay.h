@@ -36,6 +36,12 @@ public:
         if (m_current_param == 2) {m_delay_line.SetDelay(static_cast<float>(max_size) * m_param_array[2].value);}
     }
 
+    void SetParam(int param_num, float val)
+    {
+        m_param_array[param_num].value = val;
+        if (param_num == 2) {m_delay_line.SetDelay(static_cast<float>(max_size) * m_param_array[2].value);}
+    }
+
 private:
     daisysp::DelayLine<float,max_size> m_delay_line{};
     int m_max_samples{};
