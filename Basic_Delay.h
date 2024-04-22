@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Effect.h"
+
 #include "daisysp.h"
 
 template<size_t max_size>
@@ -32,11 +33,7 @@ public:
     void SetParam(float val)
     {
         m_param_array[m_current_param].value = val;
-        if (m_current_param == 2)
-        {
-            
-            m_delay_line.SetDelay(static_cast<float>(max_size) * val);
-        }
+        if (m_current_param == 2) {m_delay_line.SetDelay(static_cast<float>(max_size) * m_param_array[2].value);}
     }
 
 private:
