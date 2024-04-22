@@ -33,7 +33,7 @@ public:
     void SelectCurrentParam(int param) {m_current_param = param;}
     
     void SetSampleRate(float rate) {m_sample_rate = rate;}
-    void SetParam(float val) { if(m_param_array != nullptr) {m_param_array[m_current_param].value = val;}}
+    virtual void SetParam(float val) { if(m_param_array != nullptr) {m_param_array[m_current_param].value = val;}}
     virtual void SetParam(int param_num, float val) {assert(param_num < m_param_count);if(m_param_array != nullptr) {m_param_array[param_num].value = val;}}
 
     const std::string& GetEffectName() const {return m_effect_name;}
