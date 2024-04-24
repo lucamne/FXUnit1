@@ -8,7 +8,7 @@ LDFLAGS = -u _printf_float
 TARGET = FXunit1
 
 # Sources
-CPP_SOURCES = FXunit1.cpp Basic_Overdrive.cpp Effect.cpp
+CPP_SOURCES = FXunit1.cpp Effect.cpp
 
 # Library Locations
 LIBDAISY_DIR = /home/luca/Desktop/DaisyExamples/libDaisy/

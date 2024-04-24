@@ -1,4 +1,4 @@
-#include "Basic_Overdrive.h"
+#include "Compressor.h"
 #include "Basic_Delay.h"
 #include "Bypass.h"
 
@@ -11,11 +11,11 @@ daisy::DaisySeed hw{}; //> Daisy seed hardware object
 
 // init effects
 Bypass bypass{};
-Basic_Overdrive overdrive{};
 Basic_Delay<SAMPLE_RATE> delay{};
+Compressor comp{};
 // Store effects for easy access
 constexpr int EFFECT_COUNT{3};
-Effect* effect_array[EFFECT_COUNT]{&bypass,&delay,&overdrive};
+Effect* effect_array[EFFECT_COUNT]{&bypass,&delay,&comp};
 Effect* current_effect{effect_array[0]};
 
 void AudioCallback(daisy::AudioHandle::InterleavingInputBuffer in, daisy::AudioHandle::InterleavingOutputBuffer out, size_t size)
@@ -41,9 +41,9 @@ int main(void)
 	const float hw_sample_rate {hw.AudioSampleRate()};
 	
 	// init effects
-	overdrive.Init(hw_sample_rate);
 	bypass.Init(hw_sample_rate);
 	delay.Init(hw_sample_rate);
+	comp.Init(hw_sample_rate);
 	hw.PrintLine("Effects Initialized");
 
 	// init encoders for switching modes
@@ -106,6 +106,9 @@ int main(void)
 		}
 
 		// Print to serial monitor
-		hw.PrintLine("Mode:%s Param:%s Amt:%f" ,current_effect->GetEffectName().c_str(),current_effect->GetCurrentParamName().c_str(), current_effect->GetCurrentParamValue());
+		hw.PrintLine("Mode:%s Param:%s Amt:%f",
+			current_effect->GetEffectName().c_str(),
+			current_effect->GetCurrentParamName().c_str(),
+			current_effect->GetCurrentParamValue());
 	}
 }

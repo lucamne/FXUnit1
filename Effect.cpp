@@ -18,13 +18,13 @@ void Effect::CycleParam()
 
 void Effect::SetParam(float val) 
 { 
-    if(m_param_array != nullptr) {m_param_array[m_current_param].value = val;}
+    if(m_param_array != nullptr) {m_param_array[m_current_param].SetValue(val);}
 }
 
 void Effect::SetParam(int param_num, float val)
 {
-    assert(param_num < m_param_count);
-    if(m_param_array != nullptr) {m_param_array[param_num].value = val;}
+    assert(param_num < m_param_count && param_num >= 0);
+    if(m_param_array != nullptr) {m_param_array[param_num].SetValue(val);}
 }
 
 const std::string& Effect::GetCurrentParamName() const 
