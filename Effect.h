@@ -6,11 +6,11 @@
 struct Parameter
 {
     std::string name{};
-    float value{0.0f};
+    float* value{};
     float range{1.0f};//< factor used to scale input
     float floor{0.0f};//< set min value of input
 
-    void SetValue(float val) {value = val * range + floor;}
+    void SetValue(float val) {*value = val * range + floor;}
 };
 
 class Effect

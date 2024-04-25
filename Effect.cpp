@@ -36,5 +36,5 @@ const std::string& Effect::GetCurrentParamName() const
 float Effect::GetCurrentParamValue() 
 {
     if(m_param_array == nullptr) return 0.0f;
-    else return m_param_array[m_current_param].value;
+    else return *(m_param_array[m_current_param].value);
 }

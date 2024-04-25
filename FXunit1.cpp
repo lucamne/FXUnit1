@@ -84,7 +84,7 @@ int main(void)
 	while(1)
 	{
 		// Turn on LED if main limiter is working to signal "clipping"
-		hw.SetLed(main_limiter.GetLedState());
+		hw.SetLed(main_limiter.IsLimiting());
 		// Handles encoder movement
 		curr_a_state = encoder_out_a.Read();
 		/* current encoder output a read is different then previous, a pulse has occured and the encoder has been moved 
@@ -117,10 +117,10 @@ int main(void)
 		}
 
 		// Print to serial monitor
-		 hw.PrintLine("Mode:%s Param:%s Amt:%f",
+		 hw.PrintLine("Mode:%s Param:%s Amt:%f Limiter:%f",
 		 	current_effect->GetEffectName().c_str(),
 		 	current_effect->GetCurrentParamName().c_str(),
-		 	current_effect->GetCurrentParamValue());
+		 	current_effect->GetCurrentParamValue(),main_limiter.GetDbsCompressed());
 		//hw.PrintLine("Mode:%s Load:%f",current_effect->GetEffectName().c_str(),load_meter.GetAvgCpuLoad());
 	}
 }
