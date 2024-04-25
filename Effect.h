@@ -33,6 +33,7 @@ public:
     float GetSampleRate() const {return m_sample_rate;}
     float GetCurrentParamValue();
 
+
 protected:
     std::string m_effect_name{};
     float m_sample_rate{};

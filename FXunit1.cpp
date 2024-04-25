@@ -1,4 +1,4 @@
-#include "Compressor.h"
+#include "Compresser.h"
 #include "Basic_Delay.h"
 #include "Bypass.h"
 
@@ -8,11 +8,12 @@
 constexpr int SAMPLE_RATE{48000};
 
 daisy::DaisySeed hw{}; //> Daisy seed hardware object
+daisy::CpuLoadMeter load_meter{};
 
 // init effects
 Bypass bypass{};
 Basic_Delay<SAMPLE_RATE> delay{};
-Compressor comp{};
+Compresser comp{};
 // Store effects for easy access
 constexpr int EFFECT_COUNT{3};
 Effect* effect_array[EFFECT_COUNT]{&bypass,&delay,&comp};
@@ -20,12 +21,14 @@ Effect* current_effect{effect_array[0]};
 
 void AudioCallback(daisy::AudioHandle::InterleavingInputBuffer in, daisy::AudioHandle::InterleavingOutputBuffer out, size_t size)
 {
+	load_meter.OnBlockStart();
     for (size_t i = 0; i < size; i+=2)
     {
         float sig_out{current_effect->Process(in[i])};
         out[i] = sig_out;
         out[i+1] = sig_out;
     }
+	load_meter.OnBlockEnd();
 }
 
 int main(void)
@@ -39,6 +42,9 @@ int main(void)
 	hw.StartLog();
 	hw.PrintLine("Hardware Initialized");
 	const float hw_sample_rate {hw.AudioSampleRate()};
+
+	// init load meter
+	load_meter.Init(hw_sample_rate,hw.AudioBlockSize());
 	
 	// init effects
 	bypass.Init(hw_sample_rate);
@@ -106,9 +112,10 @@ int main(void)
 		}
 
 		// Print to serial monitor
-		hw.PrintLine("Mode:%s Param:%s Amt:%f",
-			current_effect->GetEffectName().c_str(),
-			current_effect->GetCurrentParamName().c_str(),
-			current_effect->GetCurrentParamValue());
+		 hw.PrintLine("Mode:%s Param:%s Amt:%f",
+		 	current_effect->GetEffectName().c_str(),
+		 	current_effect->GetCurrentParamName().c_str(),
+		 	current_effect->GetCurrentParamValue());
+		//hw.PrintLine("Mode:%s Load:%f",current_effect->GetEffectName().c_str(),load_meter.GetAvgCpuLoad());
 	}
 }
