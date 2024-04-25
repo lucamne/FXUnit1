@@ -1,4 +1,5 @@
-#include "Compresser.h"
+#include "Compressor.h"
+#include "Limiter.h"
 #include "Basic_Delay.h"
 #include "Bypass.h"
 
@@ -13,7 +14,8 @@ daisy::CpuLoadMeter load_meter{};
 // init effects
 Bypass bypass{};
 Basic_Delay<SAMPLE_RATE> delay{};
-Compresser comp{};
+Compressor comp{};
+Limiter main_limiter{};//< limiter used in all effects modes to prevent clipping
 // Store effects for easy access
 constexpr int EFFECT_COUNT{3};
 Effect* effect_array[EFFECT_COUNT]{&bypass,&delay,&comp};
@@ -24,7 +26,7 @@ void AudioCallback(daisy::AudioHandle::InterleavingInputBuffer in, daisy::AudioH
 	load_meter.OnBlockStart();
     for (size_t i = 0; i < size; i+=2)
     {
-        float sig_out{current_effect->Process(in[i])};
+        float sig_out{main_limiter.Process(current_effect->Process(in[i]))};
         out[i] = sig_out;
         out[i+1] = sig_out;
     }
@@ -50,6 +52,7 @@ int main(void)
 	bypass.Init(hw_sample_rate);
 	delay.Init(hw_sample_rate);
 	comp.Init(hw_sample_rate);
+	main_limiter.Init(hw_sample_rate);
 	hw.PrintLine("Effects Initialized");
 
 	// init encoders for switching modes
@@ -80,6 +83,8 @@ int main(void)
 	///*** Pogram Loop ***///
 	while(1)
 	{
+		// Turn on LED if main limiter is working to signal "clipping"
+		hw.SetLed(main_limiter.GetLedState());
 		// Handles encoder movement
 		curr_a_state = encoder_out_a.Read();
 		/* current encoder output a read is different then previous, a pulse has occured and the encoder has been moved 
