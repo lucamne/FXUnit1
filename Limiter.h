@@ -17,9 +17,5 @@ public:
         m_limit_mode = true;
     }
 
-    bool IsLimiting() const {return m_dbs_compressed >= 2.0f;} //> returns true if limiter is active
-
-private:
-    float m_attack{};
-    float m_release{};
+    bool IsLimiting() const {return m_dbs_compressed >= 0.3f;} //> returns true if limiter is active
 };

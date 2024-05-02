@@ -4,6 +4,12 @@
 
 #include <cmath>
 
+/**
+ * @brief Tracks level in decibels
+ * @author Luca Negris
+ * @date April 2024
+*/
+
 class LevelDetector : public Effect
 {
 public:
@@ -11,7 +17,7 @@ public:
     :Effect("Level Detector", 0),
     m_prev_peak_level{-100.0f},
     m_attack{1.0f},
-    m_release{300.0f} {}
+    m_release{40.0f} {}
     ~LevelDetector() {}
 
     float Process(float in)
@@ -33,9 +39,11 @@ private:
 
     void GetLevel(float x)
     {
-        if (x < -999.9f) {return;} //> if sample is too small it can be interpreted as negative infinity which will cause level to always read -inf from that point on
         const float y1 {std::max(x,MsToAlpha(m_release) * m_prev_peak_level + (1 - MsToAlpha(m_release)) * x)};
         const float yL {MsToAlpha(m_attack) * m_prev_peak_level + (1 - MsToAlpha(m_attack)) * y1};
+
+        if (std::isinf(yL) || std::isnan(yL)) {return;} //> if sample is too small it can be interpreted as negative infinity which will cause level to always read -inf from that point on
+
         m_prev_peak_level = yL;
     }
 

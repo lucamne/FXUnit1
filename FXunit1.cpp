@@ -2,6 +2,7 @@
 #include "Limiter.h"
 #include "Basic_Delay.h"
 #include "Bypass.h"
+#include "LevelDetector.h"
 
 #include "daisy_seed.h"
 
@@ -16,6 +17,8 @@ Bypass bypass{};
 Basic_Delay<SAMPLE_RATE> delay{};
 Compressor comp{};
 Limiter main_limiter{};//< limiter used in all effects modes to prevent clipping
+LevelDetector input_level{};//< used to measure input level
+LevelDetector output_level{};
 // Store effects for easy access
 constexpr int EFFECT_COUNT{3};
 Effect* effect_array[EFFECT_COUNT]{&bypass,&delay,&comp};
@@ -26,7 +29,7 @@ void AudioCallback(daisy::AudioHandle::InterleavingInputBuffer in, daisy::AudioH
 	load_meter.OnBlockStart();
     for (size_t i = 0; i < size; i+=2)
     {
-        float sig_out{main_limiter.Process(current_effect->Process(in[i]))};
+        float sig_out{output_level.Process(main_limiter.Process(current_effect->Process(input_level.Process(in[i]))))};
         out[i] = sig_out;
         out[i+1] = sig_out;
     }
@@ -53,6 +56,8 @@ int main(void)
 	delay.Init(hw_sample_rate);
 	comp.Init(hw_sample_rate);
 	main_limiter.Init(hw_sample_rate);
+	input_level.Init(hw_sample_rate);
+	output_level.Init(hw_sample_rate);
 	hw.PrintLine("Effects Initialized");
 
 	// init encoders for switching modes
@@ -117,10 +122,10 @@ int main(void)
 		}
 
 		// Print to serial monitor
-		 hw.PrintLine("Mode:%s Param:%s Amt:%f Limiter:%f",
-		 	current_effect->GetEffectName().c_str(),
-		 	current_effect->GetCurrentParamName().c_str(),
-		 	current_effect->GetCurrentParamValue(),main_limiter.GetDbsCompressed());
+		hw.PrintLine("Mode:%s Param:%s Amt:%f Input:%f Output:%f",
+		  	current_effect->GetEffectName().c_str(),
+		  	current_effect->GetCurrentParamName().c_str(),
+		  	current_effect->GetCurrentParamValue(),input_level.GetPeakLevel(),output_level.GetPeakLevel());
 		//hw.PrintLine("Mode:%s Load:%f",current_effect->GetEffectName().c_str(),load_meter.GetAvgCpuLoad());
 	}
 }
